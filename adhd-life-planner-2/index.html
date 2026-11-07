@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>ADHD Life Planner — Nordic Glass Edition</title>
+  <meta name="description" content="Ultra low-friction personal life OS engineered for neurodivergent momentum, dopamine regulation, and low-spoons ease.">
+  <meta name="theme-color" content="#070f1a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="ADHD Life 2">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" type="image/svg+xml" href="./assets/icon.svg">
+  <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="./css/nordic-theme.css">
+  <link rel="stylesheet" href="./css/glass-layout.css">
+  <link rel="stylesheet" href="./css/chloe-tour.css">
+</head>
+<body data-theme="emerald-modern">
+
+  <!-- Top Sticky Header -->
+  <header class="app-header">
+    <div class="brand-wrapper">
+      <img src="./assets/icon.svg" alt="ADHD Life Logo" class="brand-logo" />
+      <div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <h1 class="brand-title">ADHD Life Planner</h1>
+          <button type="button" class="nordic-help-badge" data-chloe-help="privacy.offline" title="Zero-Cloud Privacy Guarantee">?</button>
+        </div>
+        <span class="brand-tag">Nordic Glass Edition</span>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button type="button" class="btn-header-action" id="btn-burnout-shield" title="Burnout Shield (Emergency Low Spoons)">🛡️</button>
+      <button type="button" class="btn-header-action" id="btn-launch-tour" title="Chloe's Interactive Guide">👩‍💻</button>
+      <button type="button" class="btn-header-action" id="btn-toggle-sound" title="Dopamine Chimes Audio">🔔</button>
+    </div>
+  </header>
+
+  <!-- TOP SEGMENTED CAPSULE NAV BAR (Signature Shop 2 Experience) -->
+  <nav class="capsule-nav-container" aria-label="Primary Navigation">
+    <div class="capsule-nav-dock" id="capsule-nav">
+      <button type="button" class="capsule-tab-btn active" data-tab="today">
+        <span>⚡</span>
+        <span>Cockpit</span>
+      </button>
+      <button type="button" class="capsule-tab-btn" data-tab="tasks">
+        <span>✂️</span>
+        <span>Matrix</span>
+      </button>
+      <button type="button" class="capsule-tab-btn" data-tab="dopamine">
+        <span>🍽️</span>
+        <span>Fuel</span>
+      </button>
+      <button type="button" class="capsule-tab-btn" data-tab="routines">
+        <span>🌿</span>
+        <span>Habits</span>
+      </button>
+      <button type="button" class="capsule-tab-btn" data-tab="braindump">
+        <span>📝</span>
+        <span>Buffer</span>
+      </button>
+      <button type="button" class="capsule-tab-btn" data-tab="settings">
+        <span>⚙️</span>
+        <span>Config</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MAIN VIEWPORT CONTAINER -->
+  <div class="app-container">
+
+    <!-- 1. SCREEN: TODAY (COCKPIT & TELEMETRY MATRIX) -->
+    <section id="screen-today" class="app-screen active">
+
+      <!-- Chloe Tactical Companion Banner -->
+      <div class="glass-panel chloe-banner">
+        <div class="chloe-avatar">👩‍💻</div>
+        <div>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <span style="font-weight:800;font-size:0.95rem;color:var(--text-main);">Chloe • Tactical Copilot</span>
+            <button type="button" class="nordic-help-badge" data-chloe-help="anchor.focus" title="Single Win Rule Info">?</button>
+          </div>
+          <p style="font-size:0.82rem;color:var(--text-sub);" id="chloe-status-text">
+            One single anchor wins the day. Forget 30-item lists and preserve cognitive bandwidth.
+          </p>
+        </div>
+      </div>
+
+      <!-- DUAL-COLUMN COCKPIT (Left: Executive Momentum & Anchor / Right: 4-Tile Telemetry) -->
+      <div class="hero-split-cockpit">
+        
+        <!-- Left Column: Executive Momentum & Daily Anchor -->
+        <div class="cockpit-momentum-panel glass-panel">
+          <div class="momentum-panel-header">
+            <span class="brand-tag">Executive Telemetry</span>
+            <span class="momentum-live-pulse">LIVE</span>
+          </div>
+          
+          <div class="momentum-readout-row">
+            <div class="momentum-big-number" id="daily-progress-text">0%</div>
+            <div class="momentum-sub-wrap">
+              <span class="momentum-stat-label">Daily Momentum</span>
+              <div class="progress-bar-track">
+                <div class="progress-bar-fill" id="daily-progress-bar-fill"></div>
+              </div>
+              <span class="momentum-msg" id="daily-progress-message">Ready when you are. Take your time.</span>
+            </div>
+          </div>
+
+          <!-- Embedded Daily Focus Anchor Card -->
+          <div class="cockpit-anchor-box" id="daily-anchor-card">
+            <div class="anchor-box-head">
+              <div style="display:flex;align-items:center;gap:6px;">
+                <span style="font-size:1rem;">🎯</span>
+                <span class="anchor-box-title">Daily Focus Anchor</span>
+              </div>
+              <span class="anchor-badge">Single Win Rule</span>
+            </div>
+            <div class="anchor-input-row">
+              <label class="custom-check-label">
+                <input type="checkbox" id="anchor-checkbox" />
+                <span class="custom-check-box"></span>
+              </label>
+              <input type="text" id="anchor-input" class="glass-input" placeholder="What is your 1 primary focus today?" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Cognitive Load Telemetry Matrix -->
+        <div class="cockpit-telemetry-panel glass-panel">
+          <div class="telemetry-panel-head">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span>⚡</span>
+              <span style="font-size:0.82rem;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--color-cyan);">Cognitive Load Telemetry</span>
+            </div>
+            <button type="button" class="nordic-help-badge" data-chloe-help="energy.dial" title="Telemetry Info">?</button>
+          </div>
+
+          <div class="telemetry-tiles-grid">
+            
+            <!-- Tile 1: Biological Spoons Battery -->
+            <div class="telemetry-tile">
+              <div class="tile-label">🔋 Biological Battery</div>
+              <div class="energy-dial-pills" id="energy-dial-bar" style="margin-top:6px;">
+                <button type="button" class="energy-pill" data-energy="low">🌧️ Low Spoons</button>
+                <button type="button" class="energy-pill active" data-energy="normal">⚡ Steady</button>
+                <button type="button" class="energy-pill" data-energy="high">🚀 Focus</button>
+              </div>
+            </div>
+
+            <!-- Tile 2: Hydration Fuel Tank -->
+            <div class="telemetry-tile">
+              <div class="tile-header-row">
+                <span class="tile-label">💧 Hydration Level</span>
+                <span class="tile-value" id="water-count-display">3/8 glasses</span>
+              </div>
+              <div class="vitals-row" style="margin-top:6px;">
+                <div style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;" id="water-pills-row"></div>
+                <div style="display:flex;gap:4px;margin-left:auto;">
+                  <button type="button" class="btn-micro" id="btn-water-sub">-</button>
+                  <button type="button" class="btn-micro primary" id="btn-water-add">+1</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tile 3: Daily Neuro-Meds -->
+            <div class="telemetry-tile">
+              <div class="tile-header-row">
+                <span class="tile-label">💊 Daily Brain Fuel</span>
+                <span class="tile-sub">Rx Check</span>
+              </div>
+              <label class="custom-check-label" style="cursor:pointer;margin-top:4px;display:flex;align-items:center;">
+                <input type="checkbox" id="meds-checkbox" />
+                <span class="custom-check-box"></span>
+                <span style="font-size:0.82rem;font-weight:600;margin-left:8px;color:var(--text-sub);">Taken for today</span>
+              </label>
+            </div>
+
+            <!-- Tile 4: Burnout Shield Sensor -->
+            <div class="telemetry-tile">
+              <div class="tile-header-row">
+                <span class="tile-label">🛡️ Sensory Fog Sensor</span>
+                <span class="tile-sub" id="sensor-fog-status">Normal</span>
+              </div>
+              <div style="font-size:0.75rem;color:var(--text-dim);margin-top:4px;">
+                Low-spoons overload protection
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 2x2 FAST DOPAMINE BOOSTERS (Signature Nordic Glass Quick Bar) -->
+      <div class="glass-panel" style="padding:16px 20px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <div style="display:flex;align-items:center;gap:6px;">
+            <span style="font-size:1.05rem;">⚡</span>
+            <span style="font-weight:800;font-size:0.88rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-main);">2x2 Fast Neurochemical Boosters</span>
+          </div>
+          <span style="font-size:0.72rem;color:var(--color-accent);font-weight:700;">Instant 1-Tap Reset</span>
+        </div>
+        <div class="quick-dopamine-grid" id="quick-dopamine-grid">
+          <button type="button" class="btn-quick-dopamine" data-boost="binaural">
+            <span class="boost-icon">🎵</span>
+            <div class="boost-info">
+              <span class="boost-title">Binaural Waves</span>
+              <span class="boost-time">3 min reset</span>
+            </div>
+          </button>
+          <button type="button" class="btn-quick-dopamine" data-boost="coldwater">
+            <span class="boost-icon">🧊</span>
+            <div class="boost-info">
+              <span class="boost-title">Cold Face Splash</span>
+              <span class="boost-time">1 min shock</span>
+            </div>
+          </button>
+          <button type="button" class="btn-quick-dopamine" data-boost="boxbreath">
+            <span class="boost-icon">🧘</span>
+            <div class="boost-info">
+              <span class="boost-title">Box Breathing</span>
+              <span class="boost-time">2 min reset</span>
+            </div>
+          </button>
+          <button type="button" class="btn-quick-dopamine" data-boost="stretch">
+            <span class="boost-icon">🚶</span>
+            <div class="boost-info">
+              <span class="boost-title">Kinetic Walk</span>
+              <span class="boost-time">4 min stretch</span>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Active Tasks Snippet -->
+      <div class="glass-panel">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+          <div style="display:flex;align-items:center;gap:6px;">
+            <span style="font-size:1.1rem;">📋</span>
+            <span style="font-weight:800;font-size:0.9rem;color:var(--text-main);">Filtered Active Tasks Matrix</span>
+            <button type="button" class="nordic-help-badge" data-chloe-help="dechunk.paralysis" title="De-chunker Info">?</button>
+          </div>
+          <button type="button" class="btn-glass-primary btn-sm" id="btn-open-add-task">+ Add Task</button>
+        </div>
+        <div id="active-tasks-list" class="tasks-list-wrapper"></div>
+      </div>
+
+    </section>
+
+    <!-- 2. SCREEN: TASKS (FULL TASK MANAGER & DE-CHUNKER) -->
+    <section id="screen-tasks" class="app-screen">
+      <div class="glass-panel">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+          <div>
+            <h2 style="font-size:1.1rem;font-weight:800;color:var(--text-main);">Executive Task De-chunker</h2>
+            <p style="font-size:0.8rem;color:var(--text-sub);">Break any intimidating chore into 3-minute micro-actions.</p>
+          </div>
+          <button type="button" class="btn-glass-primary btn-sm" onclick="GlassApp.openModal('modal-add-task')">+ Add Task</button>
+        </div>
+        <p style="font-size:0.82rem;color:var(--text-dim);margin-bottom:14px;">
+          Tap the ✂️ icon on any task below to automatically split it into painless 3-minute steps.
+        </p>
+      </div>
+    </section>
+
+    <!-- 3. SCREEN: DOPAMINE (4-QUADRANT MENU) -->
+    <section id="screen-dopamine" class="app-screen">
+      <div class="glass-panel">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <div>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <h2 style="font-size:1.1rem;font-weight:800;color:var(--text-main);">4-Quadrant Dopamine Menu</h2>
+              <button type="button" class="nordic-help-badge" data-chloe-help="dopamine.menu" title="Dopamine Menu Science">?</button>
+            </div>
+            <p style="font-size:0.8rem;color:var(--text-sub);">Healthy stimulation on demand. Avoid doom-scrolling traps.</p>
+          </div>
+          <div style="display:flex;gap:6px;">
+            <button type="button" class="btn-glass-accent btn-sm" id="btn-dopamine-surprise">✨ Surprise Me</button>
+            <button type="button" class="btn-glass-primary btn-sm" id="btn-open-add-dopamine">+ Add Item</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 Quadrants Grid -->
+      <div class="dopamine-grid">
+        <!-- Appetizers -->
+        <div class="glass-panel dopamine-quadrant-card">
+          <div class="quadrant-header">
+            <span class="quadrant-badge">🥗 Appetizers (2–5 min)</span>
+          </div>
+          <div id="dopamine-list-appetizers" class="dopamine-items-col"></div>
+        </div>
+
+        <!-- Entrees -->
+        <div class="glass-panel dopamine-quadrant-card">
+          <div class="quadrant-header">
+            <span class="quadrant-badge">🍲 Entrees (Deep Focus)</span>
+          </div>
+          <div id="dopamine-list-entrees" class="dopamine-items-col"></div>
+        </div>
+
+        <!-- Sides -->
+        <div class="glass-panel dopamine-quadrant-card">
+          <div class="quadrant-header">
+            <span class="quadrant-badge">🍟 Sides (Sensory Cues)</span>
+          </div>
+          <div id="dopamine-list-sides" class="dopamine-items-col"></div>
+        </div>
+
+        <!-- Desserts -->
+        <div class="glass-panel dopamine-quadrant-card">
+          <div class="quadrant-header">
+            <span class="quadrant-badge">🍰 Desserts (Rest Rewards)</span>
+          </div>
+          <div id="dopamine-list-desserts" class="dopamine-items-col"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. SCREEN: ROUTINES (GRACE STREAKS & HABITS) -->
+    <section id="screen-routines" class="app-screen">
+      <!-- Grace Streaks Banner -->
+      <div class="glass-panel streak-banner-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <div style="display:flex;align-items:center;gap:6px;">
+            <span style="font-size:1.2rem;">⚡</span>
+            <span style="font-weight:800;font-size:0.95rem;color:var(--text-main);">Guilt-Free Grace Streaks</span>
+            <button type="button" class="nordic-help-badge" data-chloe-help="streaks.grace" title="Grace Days Explained">?</button>
+          </div>
+          <span style="font-size:0.75rem;color:var(--color-accent);font-weight:700;">Zero-Shame Metric</span>
+        </div>
+        <div class="streak-metrics-grid">
+          <div class="streak-metric-item">
+            <span class="metric-val" id="streak-count-days">1 Day</span>
+            <span class="metric-lbl">Active Streak</span>
+          </div>
+          <div class="streak-metric-item">
+            <span class="metric-val" id="streak-grace-left">2 Grace Days</span>
+            <span class="metric-lbl">Buffer Pool</span>
+          </div>
+          <div class="streak-metric-item">
+            <span class="metric-val" id="streak-total-days">1 Total Active</span>
+            <span class="metric-lbl">Total Wins</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Routine Blocks -->
+      <div class="glass-panel">
+        <div class="routine-slot-header">
+          <span>🌅 Morning Launchpad</span>
+          <span style="font-size:0.75rem;color:var(--text-dim);">Gentle start</span>
+        </div>
+        <div id="routines-list-morning" class="routines-container"></div>
+      </div>
+
+      <div class="glass-panel">
+        <div class="routine-slot-header">
+          <span>☀️ Afternoon Momentum</span>
+          <span style="font-size:0.75rem;color:var(--text-dim);">Hydrate & shift</span>
+        </div>
+        <div id="routines-list-afternoon" class="routines-container"></div>
+      </div>
+
+      <div class="glass-panel">
+        <div class="routine-slot-header">
+          <span>🌙 Evening Shutdown</span>
+          <span style="font-size:0.75rem;color:var(--text-dim);">Close mental tabs</span>
+        </div>
+        <div id="routines-list-evening" class="routines-container"></div>
+      </div>
+    </section>
+
+    <!-- 5. SCREEN: BRAIN DUMP -->
+    <section id="screen-braindump" class="app-screen">
+      <div class="glass-panel">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <div style="display:flex;align-items:center;gap:6px;">
+            <h2 style="font-size:1.1rem;font-weight:800;color:var(--text-main);">Working Memory Offloader</h2>
+            <button type="button" class="nordic-help-badge" data-chloe-help="braindump.memory" title="Brain Dump Science">?</button>
+          </div>
+          <span style="font-size:0.75rem;color:var(--color-cyan);font-weight:700;">Auto-saved</span>
+        </div>
+        <p style="font-size:0.82rem;color:var(--text-sub);margin-bottom:12px;">
+          Empty racing thoughts, intrusive ideas, and sudden reminders here so your working memory stays clear.
+        </p>
+        <textarea id="braindump-textarea" class="glass-textarea" rows="14" placeholder="Dump everything on your mind here..."></textarea>
+      </div>
+    </section>
+
+    <!-- 6. SCREEN: SETTINGS (CONFIG & PRIVACY) -->
+    <section id="screen-settings" class="app-screen">
+      <div class="glass-panel">
+        <h2 style="font-size:1.1rem;font-weight:800;color:var(--text-main);margin-bottom:14px;">Shop 2 Nordic Themes</h2>
+        <div style="margin-bottom:14px;">
+          <label style="font-size:0.82rem;font-weight:700;color:var(--text-sub);display:block;margin-bottom:6px;">Color Palette</label>
+          <select id="setting-theme-select" class="glass-select">
+            <option value="emerald-modern">Emerald Modern (Obsidian & Mint)</option>
+            <option value="oled-dark">OLED Pure Dark (High Contrast)</option>
+            <option value="nordic-fog">Nordic Fog (Frost Light)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="glass-panel">
+        <h2 style="font-size:1.1rem;font-weight:800;color:var(--text-main);margin-bottom:14px;">Local Data Backup & Privacy</h2>
+        <p style="font-size:0.82rem;color:var(--text-sub);margin-bottom:14px;">
+          Your data is stored 100% locally in your browser. Zero cloud tracking, zero logins.
+        </p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button type="button" class="btn-glass-primary" id="btn-export-json">💾 Export Backup (JSON)</button>
+          <label class="btn-glass-secondary" style="cursor:pointer;display:inline-flex;align-items:center;">
+            📂 Restore Backup
+            <input type="file" id="input-import-json" accept=".json" style="display:none;" />
+          </label>
+        </div>
+        <div style="margin-top:20px;padding-top:14px;border-top:1px solid var(--border-line);">
+          <button type="button" class="btn-glass-danger btn-sm" id="btn-reset-all">⚠️ Reset to Defaults</button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- MODALS -->
+
+  <!-- Modal: Add Task -->
+  <div id="modal-add-task" class="glass-modal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Add Executive Task</h3>
+        <button type="button" class="modal-close" data-close-modal="modal-add-task">✕</button>
+      </div>
+      <form id="form-add-task">
+        <div class="modal-body">
+          <div style="margin-bottom:12px;">
+            <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:6px;">Task Name</label>
+            <input type="text" id="input-task-title" class="glass-input" placeholder="e.g. Clear the messy bedroom" required />
+          </div>
+          <div>
+            <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:6px;">Energy Level Required</label>
+            <select id="select-task-energy" class="glass-select">
+              <option value="low">🟢 Low Energy (Survival / 2 min)</option>
+              <option value="normal" selected>🟡 Normal Energy (Standard)</option>
+              <option value="high">⚡ High Focus (Requires willpower)</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-glass-secondary" data-close-modal="modal-add-task">Cancel</button>
+          <button type="submit" class="btn-glass-primary">Save Task</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Add Dopamine Item -->
+  <div id="modal-add-dopamine" class="glass-modal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Add to Dopamine Menu</h3>
+        <button type="button" class="modal-close" data-close-modal="modal-add-dopamine">✕</button>
+      </div>
+      <form id="form-add-dopamine">
+        <div class="modal-body">
+          <div style="margin-bottom:12px;">
+            <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:6px;">Menu Category</label>
+            <select id="select-dopamine-category" class="glass-select">
+              <option value="appetizers">Appetizers (Quick 2–5 min jolts)</option>
+              <option value="entrees">Entrees (Deep nourishing activities)</option>
+              <option value="sides">Sides (Sensory/background cues)</option>
+              <option value="desserts">Desserts (Restful guilt-free treats)</option>
+            </select>
+          </div>
+          <div style="margin-bottom:12px;">
+            <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:6px;">Activity Title</label>
+            <input type="text" id="input-dopamine-title" class="glass-input" placeholder="e.g. 5-minute sun break" required />
+          </div>
+          <div>
+            <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:6px;">Duration / Type</label>
+            <input type="text" id="input-dopamine-duration" class="glass-input" placeholder="e.g. 3 min or Passive" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-glass-secondary" data-close-modal="modal-add-dopamine">Cancel</button>
+          <button type="submit" class="btn-glass-primary">Add Item</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Surprise Me Dopamine Pick -->
+  <div id="modal-surprise-pick" class="glass-modal">
+    <div class="modal-dialog" style="text-align:center;">
+      <div style="font-size:2.4rem;margin-bottom:8px;">✨</div>
+      <h3 style="font-size:1.15rem;font-weight:800;color:var(--text-main);margin-bottom:4px;">Your Dopamine Boost</h3>
+      <p style="font-size:0.8rem;color:var(--text-sub);margin-bottom:14px;">Instant stimulation to break task paralysis</p>
+      <div style="background:var(--bg-tile);border:1px solid var(--border-line);border-radius:var(--radius-card);padding:18px;margin-bottom:16px;">
+        <div id="surprise-pick-title" style="font-size:1.05rem;font-weight:800;color:var(--color-accent);margin-bottom:6px;"></div>
+        <div id="surprise-pick-duration" style="font-size:0.8rem;color:var(--text-dim);font-weight:700;"></div>
+      </div>
+      <button type="button" class="btn-glass-primary" data-close-modal="modal-surprise-pick" style="width:100%;">I'll Do This Right Now!</button>
+    </div>
+  </div>
+
+  <!-- JavaScript Modules -->
+  <script src="./js/engine.js"></script>
+  <script src="./js/storage.js"></script>
+  <script src="./js/chloe-help.js"></script>
+  <script src="./js/chloe-tour.js"></script>
+  <script src="./js/glass-controller.js"></script>
+</body>
+</html>

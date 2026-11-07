@@ -1,0 +1,406 @@
+/* =========================================================
+   ADHD Life Planner (Edition 2) - Chloe's Interactive Tour & Contextual Guide
+   Nordic Frost Glassmorphism: Zero-blur crystal clarity, DOM-anchored,
+   strict capture-phase ADHD guardrails, 100% mobile portrait responsive.
+   ========================================================= */
+
+/* Crystal clear ambient tint (ZERO BLUR to keep text and tabs 100% sharp) */
+.tutorial-mask-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(7, 15, 26, 0.22);
+  z-index: 9000;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.tutorial-mask-overlay.active {
+  opacity: 1;
+}
+
+/* Guardrail & Header Offset when tour is active */
+body.tutorial-active {
+  padding-top: 44px;
+}
+
+body.tutorial-active .app-header {
+  top: 44px;
+}
+
+body.tutorial-active .capsule-nav-container {
+  top: 94px;
+}
+
+@media (min-width: 660px) {
+  body.tutorial-active .capsule-nav-container {
+    top: 102px;
+  }
+}
+
+body.tutorial-active .capsule-tab-btn:not(.tutorial-target-active) {
+  opacity: 0.55;
+  transition: opacity 0.2s ease;
+}
+
+/* DOM-Anchored Target Spotlight */
+.tutorial-target-active {
+  position: relative !important;
+  z-index: 9200 !important;
+  outline: 2.5px solid #2dd4bf !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 0 6px rgba(45, 212, 191, 0.28), 0 8px 24px rgba(0, 0, 0, 0.55) !important;
+  animation: chloeTargetPulse 2s infinite ease-in-out !important;
+  cursor: pointer !important;
+}
+
+@keyframes chloeTargetPulse {
+  0%, 100% { outline-color: #2dd4bf; }
+  50% { outline-color: #38bdf8; }
+}
+
+/* Anchored Chloe Target Badge */
+.chloe-target-badge {
+  position: absolute;
+  top: -13px;
+  right: 10px;
+  background: linear-gradient(135deg, #10b981, #0891b2);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.55);
+  pointer-events: none;
+  z-index: 9210;
+  white-space: nowrap;
+  animation: chloeBadgePop 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Special centering for capsule navigation tabs */
+.capsule-tab-btn .chloe-target-badge {
+  top: -12px;
+  right: auto;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@keyframes chloeBadgePop {
+  from { transform: scale(0.7) translateY(4px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+/* Typing animation highlight */
+.typing-active {
+  outline: 2.5px solid #2dd4bf !important;
+  background: rgba(45, 212, 191, 0.16) !important;
+  transition: all 0.15s ease;
+}
+
+/* Top Tutorial HUD Bar */
+.tutorial-hud-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 44px;
+  background: rgba(7, 15, 26, 0.97);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(56, 189, 248, 0.35);
+  color: #f1f5f9;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 9700;
+  font-size: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+}
+
+.tutorial-hud-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-weight: 700;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.tutorial-hud-step-pill {
+  background: rgba(45, 212, 191, 0.2);
+  color: #2dd4bf;
+  border: 1px solid rgba(45, 212, 191, 0.35);
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.tutorial-hud-sub {
+  color: #94a3b8;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+@media (max-width: 520px) {
+  .tutorial-hud-sub {
+    display: none;
+  }
+}
+
+.tutorial-hud-exit {
+  background: rgba(30, 41, 59, 0.85);
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  color: #e2e8f0;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 5px 11px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.tutorial-hud-exit:hover {
+  background: rgba(51, 65, 85, 0.95);
+  color: #ffffff;
+  border-color: #38bdf8;
+}
+
+/* Floating Tour Guide Card */
+.chloe-guide-card {
+  position: fixed;
+  bottom: calc(14px + env(safe-area-inset-bottom, 6px));
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 20px);
+  max-width: 500px;
+  background: #0b1726;
+  border: 1.5px solid #2dd4bf;
+  border-radius: 18px;
+  padding: 14px 16px;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.88), 0 0 24px rgba(45, 212, 191, 0.22);
+  z-index: 9600;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 420px) {
+  .chloe-guide-card {
+    padding: 10px 12px;
+    gap: 8px;
+    border-radius: 14px;
+    bottom: calc(8px + env(safe-area-inset-bottom, 4px));
+  }
+}
+
+/* Nudge Shake Animation when user clicks outside */
+.chloe-guide-card.nudge {
+  animation: chloeNudgeShake 0.42s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  border-color: #f59e0b;
+}
+
+@keyframes chloeNudgeShake {
+  10%, 90% { transform: translateX(calc(-50% - 4px)); }
+  20%, 80% { transform: translateX(calc(-50% + 6px)); }
+  30%, 50%, 70% { transform: translateX(calc(-50% - 8px)); }
+  40%, 60% { transform: translateX(calc(-50% + 8px)); }
+}
+
+.chloe-nudge-toast {
+  background: rgba(245, 158, 11, 0.16);
+  border: 1px solid rgba(245, 158, 11, 0.45);
+  color: #fcd34d;
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+/* Embedded Modal Guide Banner */
+.chloe-modal-banner {
+  background: linear-gradient(145deg, rgba(16, 185, 129, 0.16), rgba(8, 145, 178, 0.16));
+  border: 1.5px solid #2dd4bf;
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  z-index: 9300;
+}
+
+.chloe-modal-banner.nudge {
+  animation: chloeBannerShake 0.42s ease both;
+  border-color: #f59e0b;
+}
+
+@keyframes chloeBannerShake {
+  10%, 90% { transform: translateX(-4px); }
+  20%, 80% { transform: translateX(6px); }
+  30%, 50%, 70% { transform: translateX(-6px); }
+  40%, 60% { transform: translateX(6px); }
+}
+
+.chloe-guide-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(56, 189, 248, 0.15);
+  padding-bottom: 7px;
+}
+
+.chloe-guide-identity {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chloe-avatar {
+  font-size: 19px;
+  line-height: 1;
+}
+
+.chloe-name {
+  font-weight: 800;
+  color: #f0fdfa;
+  font-size: 13px;
+}
+
+.chloe-role {
+  font-size: 10.5px;
+  color: #2dd4bf;
+  font-weight: 600;
+}
+
+.chloe-bubble-message {
+  font-size: 12.5px;
+  color: #cbd5e1;
+  line-height: 1.55;
+}
+
+.chloe-bubble-message strong {
+  color: #f0fdfa;
+  font-weight: 700;
+}
+
+.chloe-bubble-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.chloe-prompt-btn {
+  background: linear-gradient(135deg, #10b981, #0891b2);
+  color: #ffffff;
+  border: none;
+  font-weight: 800;
+  font-size: 12.5px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+  transition: all 0.15s ease;
+}
+
+.chloe-prompt-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(16, 185, 129, 0.5);
+}
+
+.chloe-prompt-btn.pulse {
+  animation: chloeBtnPulse 1.8s infinite ease-in-out;
+}
+
+@keyframes chloeBtnPulse {
+  0%, 100% { box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35); }
+  50% { box-shadow: 0 0 20px rgba(45, 212, 191, 0.7); }
+}
+
+.btn-tour-skip {
+  background: transparent;
+  border: none;
+  color: #64748b;
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 6px;
+  transition: color 0.15s ease;
+}
+
+.btn-tour-skip:hover {
+  color: #94a3b8;
+  text-decoration: underline;
+}
+
+/* Chloe Help Dialog Tooltips */
+.chloe-help-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(7, 15, 26, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 9800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.chloe-help-dialog-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.chloe-help-card {
+  width: 100%;
+  max-width: 440px;
+  background: #0b1726;
+  border: 1.5px solid #38bdf8;
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.9), 0 0 25px rgba(56, 189, 248, 0.25);
+}
+
+.chloe-help-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: #f0fdfa;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chloe-help-body {
+  font-size: 13px;
+  color: #cbd5e1;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.chloe-help-close {
+  width: 100%;
+  background: var(--hud-btn-bg);
+  border: 1px solid var(--hud-btn-border);
+  color: #2dd4bf;
+  font-weight: 700;
+  font-size: 12.5px;
+  padding: 9px;
+  border-radius: 10px;
+  cursor: pointer;
+}
