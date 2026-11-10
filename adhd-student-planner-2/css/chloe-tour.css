@@ -1,7 +1,8 @@
 /**
  * ADHD Student Planner 2 — Chloe's Executive Onboarding Tour CSS
  * Modern Nordic Glassmorphism (Shop 2 Brand Identity)
- * Compliant with Rule-01 (DOM Spotlights & Beacons) and Rule-02 (Crash-Proof Self Healing)
+ * Compliant with Rule-01 (DOM Spotlights), Rule-02 (Crash-Proof Architecture),
+ * and Rule-11 (Screen-Synchronized Guided Navigation & Viewport Adaptive Positioning).
  */
 
 .chloe-tour-overlay {
@@ -10,26 +11,28 @@
   background: rgba(3, 6, 10, 0.75);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
-  z-index: 900;
+  z-index: 9990;
   display: none;
   pointer-events: auto;
 }
 
 .chloe-tour-card {
   position: fixed;
-  z-index: 1050;
-  background: rgba(14, 27, 44, 0.95);
+  z-index: 10001;
+  background: rgba(14, 27, 44, 0.96);
   border: 1.5px solid var(--color-accent);
   border-radius: var(--radius-card);
-  padding: 22px;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8), 0 0 24px rgba(45, 212, 191, 0.25);
+  padding: 20px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 28px rgba(45, 212, 191, 0.35);
   display: none;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   color: var(--text-main);
-  transition: all var(--transition-quick);
+  transition: top 250ms ease, bottom 250ms ease, opacity 200ms ease;
 }
 
 .chloe-tour-header {
@@ -55,8 +58,24 @@
   color: var(--color-cyan);
 }
 
+.chloe-section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-accent);
+  background: rgba(45, 212, 191, 0.12);
+  border: 1px solid rgba(45, 212, 191, 0.3);
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  align-self: flex-start;
+}
+
 .chloe-tour-title {
-  font-size: 1.18rem;
+  font-size: 1.15rem;
   font-weight: 800;
   color: #ffffff;
   line-height: 1.25;
@@ -85,11 +104,11 @@
   margin-top: 8px;
 }
 
-/* DOM Spotlight Highlighting (RULE-01) */
+/* DOM Spotlight Highlighting (RULE-01, RULE-11) */
 .chloe-target-active {
   position: relative !important;
-  z-index: 950 !important;
-  box-shadow: 0 0 0 3px var(--color-accent), 0 0 35px rgba(45, 212, 191, 0.5) !important;
+  z-index: 9995 !important;
+  box-shadow: 0 0 0 3px var(--color-accent), 0 0 40px rgba(45, 212, 191, 0.6) !important;
   background: var(--bg-panel) !important;
   border-radius: var(--radius-card) !important;
   transition: all 250ms ease;
@@ -101,7 +120,7 @@
   width: 24px;
   height: 24px;
   pointer-events: none;
-  z-index: 960;
+  z-index: 9996;
 }
 
 .beacon-top-right { top: -10px; right: -10px; }
