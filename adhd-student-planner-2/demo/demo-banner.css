@@ -1,0 +1,102 @@
+/* Nordic Focus Demo Top Banner & Conversion Modal */
+.etsy-demo-banner {
+  background: linear-gradient(90deg, #0284c7 0%, #070f1a 100%);
+  color: #ffffff;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  z-index: 9999;
+  position: relative;
+  border-bottom: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.etsy-demo-banner a.etsy-demo-cta {
+  background: linear-gradient(135deg, #2dd4bf, #38bdf8);
+  color: #070f1a;
+  text-decoration: none;
+  font-weight: 800;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  transition: transform 0.15s ease;
+  box-shadow: 0 2px 8px rgba(45, 212, 191, 0.35);
+}
+
+.etsy-demo-banner a.etsy-demo-cta:hover {
+  transform: scale(1.05);
+}
+
+/* Modal Conversion Overlay */
+.etsy-demo-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 6, 10, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 10000;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.etsy-demo-modal-overlay.active {
+  display: flex;
+}
+
+.etsy-demo-modal-card {
+  background: #0d1a2d;
+  color: #f0fdfa;
+  border: 1.5px solid #2dd4bf;
+  border-radius: 20px;
+  max-width: 440px;
+  width: 100%;
+  padding: 28px;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(45, 212, 191, 0.25);
+}
+
+.etsy-demo-modal-card h3 {
+  font-size: 20px;
+  margin-bottom: 8px;
+  color: #ffffff;
+}
+
+.etsy-demo-modal-card p {
+  font-size: 14px;
+  color: #99f6e4;
+  margin-bottom: 22px;
+  line-height: 1.5;
+}
+
+.etsy-gate-btn-buy {
+  display: inline-block;
+  background: linear-gradient(135deg, #10b981, #2dd4bf);
+  color: #070f1a;
+  font-size: 15px;
+  font-weight: 800;
+  text-decoration: none;
+  padding: 12px 24px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.etsy-gate-btn-buy:hover {
+  filter: brightness(1.1);
+}
+
+.etsy-gate-btn-close {
+  background: transparent;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: #94a3b8;
+  font-size: 13px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}

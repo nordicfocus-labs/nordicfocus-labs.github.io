@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0e1b2c"/>
+      <stop offset="100%" stop-color="#04080e"/>
+    </linearGradient>
+    <linearGradient id="cyberNeon" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="50%" stop-color="#2dd4bf"/>
+      <stop offset="100%" stop-color="#10b981"/>
+    </linearGradient>
+    <linearGradient id="glassFacet" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="rgba(56, 189, 248, 0.4)"/>
+      <stop offset="100%" stop-color="rgba(45, 212, 191, 0.05)"/>
+    </linearGradient>
+    <filter id="cyberGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="16" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Deep Obsidian Squircle Shell -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad2)"/>
+  <rect x="12" y="12" width="488" height="488" rx="100" fill="none" stroke="rgba(56, 189, 248, 0.25)" stroke-width="2.5"/>
+
+  <!-- Radar Telemetry Concentric Rings -->
+  <circle cx="256" cy="256" r="170" fill="none" stroke="rgba(56, 189, 248, 0.15)" stroke-width="2"/>
+  <circle cx="256" cy="256" r="130" fill="none" stroke="rgba(45, 212, 191, 0.25)" stroke-width="2" stroke-dasharray="8 6"/>
+  <circle cx="256" cy="256" r="85" fill="none" stroke="rgba(56, 189, 248, 0.3)" stroke-width="1.5"/>
+
+  <!-- Radar Sweep Crosshairs -->
+  <line x1="86" y1="256" x2="426" y2="256" stroke="rgba(56, 189, 248, 0.2)" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <line x1="256" y1="86" x2="256" y2="426" stroke="rgba(56, 189, 248, 0.2)" stroke-width="1.5" stroke-dasharray="6 4"/>
+
+  <!-- Executive Flight Radar Diamond (Academic Mortarboard Facet) -->
+  <polygon points="256,120 400,200 256,280 112,200" fill="url(#glassFacet)" stroke="url(#cyberNeon)" stroke-width="4" filter="url(#cyberGlow)"/>
+  <polygon points="256,145 370,200 256,255 142,200" fill="rgba(6, 182, 212, 0.25)"/>
+
+  <!-- Glass Under-Cap Wedge -->
+  <path d="M 172 230 L 172 295 C 172 340 340 340 340 295 L 340 230" fill="rgba(14, 27, 44, 0.85)" stroke="#2dd4bf" stroke-width="3"/>
+
+  <!-- Cyber Tassel & Beacon -->
+  <path d="M 256 200 Q 370 230 380 290" fill="none" stroke="#38bdf8" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="256" cy="200" r="8" fill="#38bdf8"/>
+  <circle cx="380" cy="295" r="9" fill="#2dd4bf" filter="url(#cyberGlow)"/>
+
+  <!-- Quantum Momentum Telemetry Nodes at Base -->
+  <circle cx="170" cy="380" r="7" fill="#38bdf8" filter="url(#cyberGlow)"/>
+  <circle cx="256" cy="400" r="10" fill="#2dd4bf" filter="url(#cyberGlow)"/>
+  <circle cx="342" cy="380" r="7" fill="#10b981" filter="url(#cyberGlow)"/>
+  <line x1="170" y1="380" x2="256" y2="400" stroke="#38bdf8" stroke-width="2.5"/>
+  <line x1="256" y1="400" x2="342" y2="380" stroke="#2dd4bf" stroke-width="2.5"/>
+</svg>

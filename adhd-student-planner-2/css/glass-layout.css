@@ -1,0 +1,517 @@
+/**
+ * ADHD Student Planner 2 — Glass Cockpit Layout & Components
+ * Architecture: Split Dual-Column Glass Cockpit & Top Capsule Nav
+ * Follows Rule-03 (Structural Differentiation), Rule-04 (Brand DNA), Rule-05 (Mobile Resilience < 400px)
+ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100%;
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  font-family: var(--font-base);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
+}
+
+/* Master Glass Shell Container */
+.cockpit-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 20px 80px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Header & Top Capsule Nav */
+.cockpit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 18px;
+  background: var(--bg-panel);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-line);
+  border-radius: var(--radius-card);
+  box-shadow: var(--hud-shadow);
+}
+
+.brand-telemetry {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.brand-radar-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-btn);
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(56, 189, 248, 0.2));
+  border: 1px solid var(--color-accent);
+  color: var(--color-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.brand-text {
+  min-width: 0;
+}
+
+.brand-title {
+  font-size: clamp(1.1rem, 3.2vw, 1.4rem);
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  color: var(--text-main);
+  line-height: 1.2;
+}
+
+.brand-subtitle {
+  font-size: clamp(0.72rem, 2vw, 0.82rem);
+  color: var(--text-dim);
+  font-weight: 600;
+}
+
+.header-status-capsules {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.capsule-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--badge-bg);
+  border: 1px solid var(--badge-border);
+  color: var(--badge-text);
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.btn-fog-cockpit {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-tile);
+  border: 1px solid var(--border-line);
+  color: var(--text-sub);
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-quick);
+}
+
+.btn-fog-cockpit:hover {
+  background: var(--bg-tile-hover);
+  border-color: var(--border-focus);
+}
+
+.btn-fog-cockpit.active {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+  color: #070f1a;
+  border-color: var(--border-focus);
+  box-shadow: 0 0 14px rgba(45, 212, 191, 0.5);
+}
+
+/* Top Segmented Capsule Navigation (RULE-05 Compliant: 3x2 on mobile, 1 row on desktop) */
+.capsule-nav-wrapper {
+  width: 100%;
+}
+
+.capsule-nav {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  background: var(--nav-bg);
+  padding: 6px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-line);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+}
+
+.capsule-tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-sub);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-quick);
+  text-decoration: none;
+  min-width: 0;
+}
+
+.capsule-tab svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.capsule-tab:hover {
+  color: var(--text-main);
+  background: var(--bg-tile);
+}
+
+.capsule-tab.active {
+  background: var(--nav-tab-active-bg);
+  border-color: var(--nav-tab-active-border);
+  color: var(--nav-tab-active-text);
+  box-shadow: var(--nav-tab-active-shadow);
+}
+
+/* Mobile Breakpoint for Navigation (< 440px): 3x2 responsive grid */
+@media (max-width: 600px) {
+  .cockpit-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .header-status-capsules {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .capsule-nav {
+    grid-template-columns: repeat(3, 1fr);
+    border-radius: var(--radius-card);
+  }
+  .capsule-tab {
+    padding: 8px 6px;
+    font-size: 0.75rem;
+    flex-direction: column;
+    gap: 4px;
+  }
+}
+
+/* Split Dual-Column Glass Cockpit Grid (RULE-03) */
+.cockpit-grid {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+@media (max-width: 900px) {
+  .cockpit-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Left Column: Flight Radar & Telemetry HUD */
+.cockpit-hud-column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.hud-panel {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-line);
+  border-radius: var(--radius-card);
+  padding: 20px;
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: var(--hud-shadow);
+}
+
+/* 4-Tile Telemetry Grid */
+.telemetry-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.telemetry-tile {
+  background: var(--bg-tile);
+  border: 1px solid var(--border-line);
+  border-radius: var(--radius-btn);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all var(--transition-quick);
+}
+
+.telemetry-tile:hover {
+  background: var(--bg-tile-hover);
+  border-color: var(--border-focus);
+}
+
+.tile-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-dim);
+}
+
+.tile-value {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-top: 4px;
+}
+
+.tile-sub {
+  font-size: 0.7rem;
+  color: var(--color-cyan);
+  font-weight: 600;
+}
+
+/* Single Focus Action Glass Card (Left HUD) */
+.glass-focus-card {
+  background: linear-gradient(145deg, rgba(21, 39, 64, 0.8), rgba(14, 27, 44, 0.95));
+  border: 1.5px solid var(--color-accent);
+  border-radius: var(--radius-card);
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 24px rgba(45, 212, 191, 0.15);
+}
+
+.glass-focus-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent), var(--color-cyan));
+}
+
+.hud-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-accent);
+  margin-bottom: 8px;
+}
+
+.hud-task-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1.25;
+  margin-bottom: 12px;
+}
+
+.hud-step-pill {
+  background: rgba(7, 15, 26, 0.6);
+  border: 1px dashed var(--border-line);
+  border-radius: var(--radius-btn);
+  padding: 12px;
+  margin: 12px 0;
+}
+
+.hud-step-text {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+/* Focus Sprint Timer Floating in Cockpit */
+.hud-sprint-widget {
+  background: var(--bg-tile);
+  border: 1px solid var(--border-line);
+  border-radius: var(--radius-btn);
+  padding: 14px;
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sprint-digits-cockpit {
+  font-size: 1.8rem;
+  font-family: var(--font-mono);
+  font-weight: 800;
+  color: var(--color-accent);
+  letter-spacing: 0.05em;
+}
+
+/* Right Column: Screen Panels */
+.cockpit-panel-screen {
+  display: none;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-line);
+  border-radius: var(--radius-card);
+  padding: 24px;
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: var(--hud-shadow);
+  animation: fadeIn 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.cockpit-panel-screen.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Glass Buttons */
+.btn-glass {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border-radius: var(--radius-btn);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all var(--transition-quick);
+  text-decoration: none;
+}
+
+.btn-glass-primary {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+  color: #070f1a;
+  box-shadow: 0 4px 14px rgba(45, 212, 191, 0.25);
+}
+
+.btn-glass-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(45, 212, 191, 0.35);
+}
+
+.btn-glass-secondary {
+  background: var(--bg-tile);
+  border-color: var(--border-line);
+  color: var(--text-main);
+}
+
+.btn-glass-secondary:hover {
+  background: var(--bg-tile-hover);
+  border-color: var(--border-focus);
+}
+
+.btn-glass-sm {
+  padding: 6px 12px;
+  font-size: 0.78rem;
+  border-radius: 8px;
+}
+
+/* Glass Modals */
+.app-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(3, 6, 10, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.app-modal.active {
+  display: flex;
+}
+
+.modal-dialog {
+  background: #0d1a2d;
+  border: 1px solid var(--border-focus);
+  border-radius: var(--radius-card);
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+  padding: 26px;
+  color: var(--text-main);
+  animation: modalScale 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes modalScale {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--border-line);
+  padding-bottom: 12px;
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--text-dim);
+  cursor: pointer;
+}
+
+.modal-close:hover {
+  color: var(--text-main);
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-sub);
+  margin-bottom: 6px;
+}
+
+.form-input, .form-select {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: var(--radius-btn);
+  border: 1px solid var(--border-line);
+  background: var(--bg-tile);
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+
+.form-input:focus, .form-select:focus {
+  outline: none;
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.2);
+}

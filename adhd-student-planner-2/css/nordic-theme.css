@@ -1,0 +1,137 @@
+/**
+ * ADHD Student Planner 2 — Nordic Glass Themes (Edition 2: Shop 2 Brand DNA)
+ * Frosted obsidian canvas, luminous mint & cyber cyan accents, OLED stealth.
+ */
+
+:root {
+  --font-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', sans-serif;
+  --font-mono: 'SF Mono', 'Roboto Mono', Menlo, Monaco, Consolas, monospace;
+  --radius-card: 18px;
+  --radius-btn: 12px;
+  --radius-pill: 999px;
+  --transition-quick: 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* 1. Emerald Modern (Shop 2 Default: Frosted Obsidian & Electric Mint) */
+body[data-theme="emerald-modern"] {
+  --bg-app: #070f1a;
+  --bg-header: rgba(7, 15, 26, 0.94);
+  --bg-panel: rgba(14, 27, 44, 0.78);
+  --bg-tile: rgba(21, 39, 64, 0.65);
+  --bg-tile-hover: rgba(30, 56, 92, 0.85);
+  --border-line: rgba(56, 189, 248, 0.18);
+  --border-focus: #2dd4bf;
+  --text-main: #f0fdfa;
+  --text-sub: #99f6e4;
+  --text-dim: #5eead4;
+  --color-primary: #10b981;
+  --color-accent: #2dd4bf;
+  --color-cyan: #38bdf8;
+  --color-gold: #fbbf24;
+  --color-rose: #f43f5e;
+  --nav-bg: rgba(7, 15, 26, 0.96);
+  --nav-tab-bg: rgba(21, 39, 64, 0.55);
+  --nav-tab-border: rgba(56, 189, 248, 0.18);
+  --nav-tab-active-bg: linear-gradient(135deg, rgba(16, 185, 129, 0.35), rgba(6, 182, 212, 0.35));
+  --nav-tab-active-border: #2dd4bf;
+  --nav-tab-active-text: #f0fdfa;
+  --nav-tab-active-shadow: 0 0 16px rgba(45, 212, 191, 0.28);
+  --badge-bg: rgba(56, 189, 248, 0.14);
+  --badge-border: rgba(56, 189, 248, 0.3);
+  --badge-text: #38bdf8;
+  --hud-shadow: 0 16px 40px -8px rgba(16, 185, 129, 0.22);
+  --glass-blur: blur(16px);
+}
+
+/* 2. OLED Pure Dark (Deep Minimalist Black with Neon Mint Accents) */
+body[data-theme="oled-dark"] {
+  --bg-app: #03060a;
+  --bg-header: rgba(3, 6, 10, 0.96);
+  --bg-panel: #0a111a;
+  --bg-tile: #111e2e;
+  --bg-tile-hover: #192a40;
+  --border-line: #1c324a;
+  --border-focus: #34d399;
+  --text-main: #ffffff;
+  --text-sub: #94a3b8;
+  --text-dim: #64748b;
+  --color-primary: #34d399;
+  --color-accent: #38bdf8;
+  --color-cyan: #22d3ee;
+  --color-gold: #f59e0b;
+  --color-rose: #f43f5e;
+  --nav-bg: rgba(3, 6, 10, 0.98);
+  --nav-tab-bg: #111e2e;
+  --nav-tab-border: #1e3a58;
+  --nav-tab-active-bg: #1e3a58;
+  --nav-tab-active-border: #34d399;
+  --nav-tab-active-text: #ffffff;
+  --nav-tab-active-shadow: 0 0 16px rgba(52, 211, 153, 0.3);
+  --badge-bg: rgba(52, 211, 153, 0.12);
+  --badge-border: rgba(52, 211, 153, 0.3);
+  --badge-text: #34d399;
+  --hud-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.7);
+  --glass-blur: blur(14px);
+}
+
+/* 3. Arctic Frost (Luminous Cyan & Deep Glacier Blue) */
+body[data-theme="arctic-frost"] {
+  --bg-app: #06111e;
+  --bg-header: rgba(6, 17, 30, 0.95);
+  --bg-panel: rgba(12, 29, 50, 0.82);
+  --bg-tile: rgba(18, 42, 72, 0.65);
+  --bg-tile-hover: rgba(26, 60, 102, 0.85);
+  --border-line: rgba(56, 189, 248, 0.25);
+  --border-focus: #38bdf8;
+  --text-main: #f0f9ff;
+  --text-sub: #bae6fd;
+  --text-dim: #7dd3fc;
+  --color-primary: #0ea5e9;
+  --color-accent: #38bdf8;
+  --color-cyan: #7dd3fc;
+  --color-gold: #facc15;
+  --color-rose: #fb7185;
+  --nav-bg: rgba(6, 17, 30, 0.96);
+  --nav-tab-bg: rgba(18, 42, 72, 0.6);
+  --nav-tab-border: rgba(56, 189, 248, 0.25);
+  --nav-tab-active-bg: linear-gradient(135deg, rgba(14, 165, 233, 0.4), rgba(56, 189, 248, 0.3));
+  --nav-tab-active-border: #38bdf8;
+  --nav-tab-active-text: #ffffff;
+  --nav-tab-active-shadow: 0 0 20px rgba(56, 189, 248, 0.35);
+  --badge-bg: rgba(56, 189, 248, 0.16);
+  --badge-border: rgba(56, 189, 248, 0.35);
+  --badge-text: #7dd3fc;
+  --hud-shadow: 0 16px 40px -8px rgba(14, 165, 233, 0.25);
+  --glass-blur: blur(16px);
+}
+
+/* 4. High Contrast Neon Cyber */
+body[data-theme="high-contrast-neon"] {
+  --bg-app: #000000;
+  --bg-header: #000000;
+  --bg-panel: #0a0a0a;
+  --bg-tile: #141414;
+  --bg-tile-hover: #222222;
+  --border-line: #333333;
+  --border-focus: #00ffcc;
+  --text-main: #ffffff;
+  --text-sub: #00ffcc;
+  --text-dim: #aaaaaa;
+  --color-primary: #00ffcc;
+  --color-accent: #00e5ff;
+  --color-cyan: #00e5ff;
+  --color-gold: #ffea00;
+  --color-rose: #ff0055;
+  --nav-bg: #000000;
+  --nav-tab-bg: #111111;
+  --nav-tab-border: #333333;
+  --nav-tab-active-bg: #00332a;
+  --nav-tab-active-border: #00ffcc;
+  --nav-tab-active-text: #00ffcc;
+  --nav-tab-active-shadow: 0 0 20px rgba(0, 255, 204, 0.4);
+  --badge-bg: #00332a;
+  --badge-border: #00ffcc;
+  --badge-text: #00ffcc;
+  --hud-shadow: 0 16px 40px -8px rgba(0, 255, 204, 0.3);
+  --glass-blur: none;
+}
