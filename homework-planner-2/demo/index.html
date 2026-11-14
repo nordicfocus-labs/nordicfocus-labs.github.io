@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DEMO — Homework Planner 2 | Nordic Glass Cockpit</title>
+  <meta name="description" content="A sleek Nordic glass homework cockpit for ADHD students: Start-By dates, Kanban homework radar, 14-day load heatmap, weekly routines, backpack ready check and triage desk. 100% private, offline-first PWA.">
+  <meta name="theme-color" content="#070f1a">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+  <link rel="stylesheet" href="demo-banner.css">
+  <script src="demo-guard.js"></script>
+  <link rel="stylesheet" href="../css/app.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/theme.css">
+</head>
+<body data-theme="nordic-glass">
+  <div class="aurora" aria-hidden="true"></div>
+
+  <div class="shell">
+    <!-- Left rail (desktop) / top grid (mobile) -->
+    <aside class="rail">
+      <div class="rail-brand">
+        <div class="brand-mark" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        </div>
+        <div class="brand-text">
+          <h1 class="brand-title">Homework Planner</h1>
+          <div class="brand-subtitle">Chloe's Cockpit · Live Interactive Demo</div>
+        </div>
+      </div>
+
+      <nav id="rail-nav" class="rail-nav" aria-label="Main">
+        <button class="nav-btn active" type="button" data-tab="tonight"><span class="nav-ico">◎</span><span>Cockpit</span></button>
+        <button class="nav-btn" type="button" data-tab="radar"><span class="nav-ico">▦</span><span>Radar</span></button>
+        <button class="nav-btn" type="button" data-tab="capacity"><span class="nav-ico">▥</span><span>Load Map</span></button>
+        <button class="nav-btn" type="button" data-tab="subjects"><span class="nav-ico">▤</span><span>Subjects</span></button>
+        <button class="nav-btn" type="button" data-tab="rescue"><span class="nav-ico">♡</span><span>Triage</span></button>
+        <button class="nav-btn" type="button" data-tab="settings"><span class="nav-ico">⚙</span><span>Settings</span></button>
+      </nav>
+
+      <div class="rail-foot">
+        <span id="badge-streak" class="badge-pill" title="Days in a row with finished homework">0-day streak</span>
+        <button id="btn-toggle-fog" class="btn btn-sm btn-ghost" type="button" aria-pressed="false">Fog Mode</button>
+      </div>
+
+      <!-- Sprint console docks inside the rail -->
+      <div id="hud-sprint" class="sprint-hud" style="display:none;" role="status" aria-live="polite">
+        <div class="sprint-label">Sprint · <span id="sprint-title"></span></div>
+        <div id="sprint-digits" class="sprint-digits">15:00</div>
+        <div class="sprint-track"><div id="sprint-bar" class="sprint-bar"></div></div>
+        <div class="sprint-actions">
+          <button id="btn-pause-sprint" class="btn btn-sm btn-hud" type="button">Pause</button>
+          <button id="btn-stop-sprint" class="btn btn-sm btn-hud" type="button">Finish</button>
+        </div>
+      </div>
+    </aside>
+
+    <div class="stage">
+      <!-- Screen: Cockpit (split view) -->
+      <main id="screen-tonight" class="app-screen active">
+        <div class="cockpit">
+          <div class="cockpit-main">
+            <section id="hero-next" class="glass hero-card" aria-label="Up first tonight"></section>
+            <section id="backpack-bar" class="glass backpack-card fog-hide" style="display:none;" aria-label="Backpack ready check"></section>
+            <section id="rescue-nudge" class="nudge fog-hide" style="display:none;"></section>
+          </div>
+
+          <div class="cockpit-side fog-hide">
+            <section class="glass command" aria-label="Command bar: capture homework">
+              <div class="card-title">Command bar</div>
+              <div class="command-line">
+                <input id="qa-title" class="input" type="text" maxlength="120" placeholder="Type homework, press Enter" autocomplete="off">
+                <button id="btn-qa-add" class="btn btn-primary" type="button">Add it</button>
+              </div>
+              <div class="chip-label">Due</div>
+              <div id="qa-due" class="chip-row" role="group" aria-label="Due date">
+                <button type="button" class="chip" data-due="today">Today</button>
+                <button type="button" class="chip selected" data-due="tomorrow">Tomorrow</button>
+                <button type="button" class="chip" data-due="friday">Friday</button>
+                <button type="button" class="chip" data-due="nextweek">Next week</button>
+              </div>
+              <div class="chip-label">Time guess</div>
+              <div id="qa-est" class="chip-row" role="group" aria-label="Estimated time">
+                <button type="button" class="chip" data-est="20">20m</button>
+                <button type="button" class="chip selected" data-est="45">45m</button>
+                <button type="button" class="chip" data-est="90">1.5h</button>
+                <button type="button" class="chip" data-est="180">3h</button>
+              </div>
+              <button class="btn btn-ghost btn-sm" type="button" data-open-modal="modal-add-assignment" style="margin-top:12px">More options</button>
+            </section>
+
+            <section class="glass" aria-label="Next 7 evenings load">
+              <div class="card-title">Next 7 nights load <span id="tonight-load" class="tag">0m tonight</span></div>
+              <div id="week-ribbon" class="ribbon"></div>
+            </section>
+
+            <section class="glass" aria-label="Queue">
+              <div class="card-title">Homework queue</div>
+              <div id="upcoming-list" class="list"></div>
+            </section>
+
+            <section class="stat-grid" aria-label="Quick stats">
+              <div class="stat"><div id="stat-open" class="stat-num">0</div><div class="stat-label">Open</div></div>
+              <div class="stat"><div id="stat-week" class="stat-num">0</div><div class="stat-label">This week</div></div>
+              <div class="stat"><div id="stat-done" class="stat-num">0</div><div class="stat-label">Finished</div></div>
+            </section>
+          </div>
+        </div>
+      </main>
+
+      <!-- Screen: Radar board -->
+      <section id="screen-radar" class="app-screen">
+        <div class="screen-head">
+          <div>
+            <h2>Homework Radar</h2>
+            <p class="muted">Four Kanban lanes. Cards are ordered by when you should start.</p>
+          </div>
+          <button class="btn btn-primary btn-sm" type="button" data-open-modal="modal-add-assignment">+ Add</button>
+        </div>
+        <div id="radar-filter" class="chip-row" role="group" aria-label="Filter">
+          <button type="button" class="chip selected" data-filter="open">Open</button>
+          <button type="button" class="chip" data-filter="done">Finished</button>
+        </div>
+        <div id="radar-board" class="board"></div>
+      </section>
+
+      <!-- Screen: Capacity heatmap (exclusive to Edition 2) -->
+      <section id="screen-capacity" class="app-screen">
+        <div class="screen-head">
+          <div>
+            <h2>14-Day Load Map</h2>
+            <p class="muted">Your next 14 evenings. Homework minutes spread from each Start-By date to its due date.</p>
+          </div>
+        </div>
+        <div class="glass">
+          <div id="capacity-grid" class="heat-grid"></div>
+          <div class="legend">
+            <span><i class="lv-light"></i>Light</span><span><i class="lv-ok"></i>Good</span><span><i class="lv-heavy"></i>Heavy</span><span><i class="lv-over"></i>Over budget</span>
+          </div>
+          <p id="capacity-note" class="muted" style="margin-top:10px;"></p>
+        </div>
+      </section>
+
+      <!-- Screen: Subjects & Weekly Routines -->
+      <section id="screen-subjects" class="app-screen">
+        <div class="screen-head">
+          <div>
+            <h2>Subjects &amp; Routines</h2>
+            <p class="muted">Organize classes and automate repeating weekly homework.</p>
+          </div>
+        </div>
+        <div class="glass">
+          <div class="card-title">Classes / Subjects</div>
+          <div class="inline-form">
+            <input id="course-name" class="input" type="text" maxlength="60" placeholder="e.g. AP Chemistry" autocomplete="off">
+            <button id="btn-add-course" class="btn btn-primary" type="button">Add</button>
+          </div>
+        </div>
+        <div id="course-list"></div>
+
+        <div id="routine-card" class="glass">
+          <div class="card-title">
+            <span>Weekly Homework Routines</span>
+            <button id="btn-spawn-routines" class="btn btn-secondary btn-sm" type="button">Load this week</button>
+          </div>
+          <p class="muted" style="font-size:0.85rem; margin-bottom:10px;">Save repeating weekly homework once and generate missing items in one click.</p>
+          <label class="field"><span>Homework title</span><input id="routine-title" class="input" type="text" maxlength="120" placeholder="e.g. Chemistry Lab Pre-Read" autocomplete="off"></label>
+          <div class="grid-2">
+            <label class="field"><span>Subject</span><select id="routine-course" class="input"></select></label>
+            <label class="field"><span>Due every</span><select id="routine-day" class="input">
+              <option value="1">Monday</option>
+              <option value="2">Tuesday</option>
+              <option value="3">Wednesday</option>
+              <option value="4">Thursday</option>
+              <option value="5">Friday</option>
+              <option value="6">Saturday</option>
+              <option value="0">Sunday</option>
+            </select></label>
+          </div>
+          <div class="grid-2">
+            <label class="field"><span>Est. minutes</span><input id="routine-est" class="input" type="number" min="5" max="600" step="5" value="30" inputmode="numeric"></label>
+            <label class="field"><span>Micro-step template</span><select id="routine-template" class="input"></select></label>
+          </div>
+          <button id="btn-add-routine" class="btn btn-primary btn-sm" type="button">Save weekly routine</button>
+          <div id="routine-list" style="margin-top:14px;"></div>
+        </div>
+      </section>
+
+      <!-- Screen: Rescue triage desk (one at a time) -->
+      <section id="screen-rescue" class="app-screen">
+        <div class="screen-head">
+          <div>
+            <h2>Catch-Up Triage Desk</h2>
+            <p class="muted">Behind? Process one slipped homework item at a time. Choose a move, or skip for now.</p>
+          </div>
+        </div>
+        <div id="rescue-list"></div>
+      </section>
+
+      <!-- Screen: Settings -->
+      <section id="screen-settings" class="app-screen">
+        <div class="screen-head">
+          <div>
+            <h2>Settings</h2>
+            <p class="muted">Everything stays on this device.</p>
+          </div>
+        </div>
+        <div class="settings-grid">
+          <div class="glass">
+            <div class="card-title">Look &amp; feel</div>
+            <div id="theme-picker" class="chip-row"></div>
+            <label class="switch-row"><span>Sound cues</span><input id="set-sound" type="checkbox"></label>
+          </div>
+          <div class="glass">
+            <div class="card-title">Your evening budget</div>
+            <label class="field">
+              <span>Realistic minutes of homework per day</span>
+              <input id="set-capacity" class="input" type="number" min="15" max="720" step="15" inputmode="numeric">
+            </label>
+            <label class="switch-row"><span>Keep weekends free when planning Start-By dates</span><input id="set-weekends" type="checkbox"></label>
+            <p id="fudge-note" class="muted"></p>
+          </div>
+          <div class="glass">
+            <div class="card-title">Backup &amp; guide</div>
+            <div class="row-actions wrap">
+              <button id="btn-export-json" class="btn btn-secondary" type="button">Export backup</button>
+              <button id="btn-import-json" class="btn btn-secondary" type="button">Import backup</button>
+              <button id="btn-restart-tour" class="btn btn-ghost" type="button">Replay Chloe's tour</button>
+            </div>
+            <input id="file-import" type="file" accept="application/json,.json" style="display:none;">
+            <div class="row-actions wrap">
+              <button id="btn-reset-data" class="btn btn-danger-soft" type="button">Erase all data</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- Modal: Add homework -->
+  <div id="modal-add-assignment" class="app-modal" role="dialog" aria-modal="true" aria-labelledby="add-title-h">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3 id="add-title-h">New homework</h3>
+        <button class="btn-x" type="button" data-close-modal="modal-add-assignment" aria-label="Close">×</button>
+      </div>
+      <label class="field"><span>Title</span><input id="add-title" class="input" type="text" maxlength="120" autocomplete="off"></label>
+      <div class="grid-2">
+        <label class="field"><span>Due date</span><input id="add-due" class="input" type="date"></label>
+        <label class="field"><span>Estimated minutes</span><input id="add-est" class="input" type="number" min="0" max="6000" step="5" value="45" inputmode="numeric"></label>
+      </div>
+      <div class="grid-2">
+        <label class="field"><span>Subject</span><select id="add-course" class="input"></select></label>
+        <label class="field"><span>Grade impact (0-100)</span><input id="add-weight" class="input" type="number" min="0" max="100" value="10" inputmode="numeric"></label>
+      </div>
+      <label class="field"><span>Break into tiny steps?</span><select id="add-template" class="input"></select></label>
+      <p id="add-error" class="form-error" role="alert"></p>
+      <div class="row-actions">
+        <button id="btn-save-assignment" class="btn btn-primary" type="button">Save homework</button>
+        <button class="btn btn-ghost" type="button" data-close-modal="modal-add-assignment">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Homework details -->
+  <div id="modal-assignment-detail" class="app-modal" role="dialog" aria-modal="true" aria-labelledby="detail-title-h">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3 id="detail-title-h">Homework</h3>
+        <button class="btn-x" type="button" data-close-modal="modal-assignment-detail" aria-label="Close">×</button>
+      </div>
+      <div id="detail-body"></div>
+      <div class="row-actions">
+        <button class="btn btn-ghost" type="button" data-close-modal="modal-assignment-detail">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Confirm -->
+  <div id="modal-confirm" class="app-modal" role="dialog" aria-modal="true" aria-labelledby="confirm-h">
+    <div class="modal-card small">
+      <div class="modal-head">
+        <h3 id="confirm-h">Are you sure?</h3>
+        <button class="btn-x" type="button" data-close-modal="modal-confirm" aria-label="Close">×</button>
+      </div>
+      <p id="confirm-text" class="muted"></p>
+      <div class="row-actions">
+        <button id="btn-confirm-yes" class="btn btn-danger-soft" type="button">Yes, do it</button>
+        <button class="btn btn-ghost" type="button" data-close-modal="modal-confirm">Keep things as they are</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <!-- Guided tour (never blocks clicks) -->
+  <div id="tutorial-overlay" class="tutorial-overlay" style="display:none;">
+    <div id="tutorial-card" class="tutorial-card" style="display:none;" role="dialog" aria-live="polite" aria-labelledby="tutorial-title">
+      <div class="tour-head">
+        <div class="tour-avatar" aria-hidden="true">C</div>
+        <div>
+          <div id="tutorial-section-tag" class="tour-tag"></div>
+          <div id="tutorial-title" class="tour-title"></div>
+        </div>
+        <div id="tutorial-step-count" class="tour-count"></div>
+      </div>
+      <p id="tutorial-message" class="tour-msg"></p>
+      <p id="tutorial-hint" class="tour-hint"></p>
+      <div class="tour-actions">
+        <button id="tutorial-btn-skip" class="btn btn-ghost btn-sm" type="button">Skip tour</button>
+        <span class="spacer"></span>
+        <button id="tutorial-btn-prev" class="btn btn-secondary btn-sm" type="button">Back</button>
+        <button id="tutorial-btn-next" class="btn btn-primary btn-sm" type="button">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/engine.js"></script>
+  <script src="../js/storage.js"></script>
+  <script src="../js/config.js"></script>
+  <script src="../js/tutorials.js"></script>
+  <script src="../js/app.js"></script>
+</body>
+</html>
