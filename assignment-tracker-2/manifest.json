@@ -1,0 +1,16 @@
+{
+  "name": "Assignment Tracker — Calm Deadline Radar",
+  "short_name": "Assignments 2",
+  "description": "A sleek deadline cockpit for ADHD students with Start-By dates, radar board, capacity heatmap and a Triage Desk.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#070f1a",
+  "theme_color": "#5cc8f5",
+  "orientation": "portrait",
+  "icons": [
+    { "src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}
+
