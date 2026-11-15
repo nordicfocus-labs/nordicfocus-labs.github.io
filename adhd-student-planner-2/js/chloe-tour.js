@@ -136,7 +136,8 @@
       els.title.textContent = step.title;
 
       if (currentStep === 0) {
-        const hasHeroTask = targetEl && !targetEl.textContent.includes('All assignments completed') && !targetEl.textContent.includes('No pending assignments');
+        const text = (targetEl && targetEl.textContent) ? targetEl.textContent : '';
+        const hasHeroTask = text && !text.includes('All assignments completed') && !text.includes('No pending assignments');
         if (!hasHeroTask) {
           els.message.textContent = 'Syllabus overwhelm destroys focus. When coursework is active, this Flight Radar isolates your single highest-yield micro-step right now.';
           els.hint.textContent = 'Tap "+ Add Deliverable" anytime to break assignments into micro-chunks.';
@@ -212,7 +213,8 @@
       card.style.left = `${leftPos}px`;
       card.style.right = 'auto';
       card.style.width = `${cardWidth}px`;
-      if (!card.style.transform.includes('translateY')) {
+      const curTransform = card.style.transform || '';
+      if (!curTransform.includes('translateY')) {
         card.style.transform = 'none';
       }
     }

@@ -602,10 +602,6 @@
     window.StudentStorage.save(state);
     renderAll();
   }
-    playCyberChime('sprint');
-    window.StudentStorage.save(state);
-    renderAll();
-  }
 
   function dechunkExistingAssignment(asgId) {
     const asg = state.assignments.find(a => a.id === asgId);
