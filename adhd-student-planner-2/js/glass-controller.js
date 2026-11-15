@@ -253,6 +253,15 @@
       });
     });
 
+    // Escape key modal dismissal
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.app-modal.active').forEach(modal => {
+          closeModal(modal.id);
+        });
+      }
+    });
+
     setupForms();
   }
 
