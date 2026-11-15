@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="../css/glass-layout.css">
   <link rel="stylesheet" href="../css/chloe-tour.css">
 </head>
-<body data-theme="emerald-modern">
+<body data-theme="emerald-modern" data-active-tab="dashboard">
 
   <div class="cockpit-container">
     <!-- Executive Cockpit Header -->
@@ -173,7 +173,7 @@
             <button class="btn-glass btn-glass-primary" data-open-modal="modal-add-course">+ Enroll Course</button>
           </div>
 
-          <div id="grid-courses" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <div id="grid-courses" class="grid-courses">
             <!-- Populated dynamically by glass-controller.js -->
           </div>
         </section>

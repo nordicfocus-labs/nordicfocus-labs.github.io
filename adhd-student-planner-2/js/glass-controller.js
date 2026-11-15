@@ -79,6 +79,7 @@
     window.StudentStorage.save(state);
 
     applyTheme(state.settings.theme || 'emerald-modern');
+    document.body.setAttribute('data-active-tab', 'dashboard');
     setupNavigation();
     setupEventListeners();
     setupModals();
@@ -108,11 +109,15 @@
   }
 
   function switchTab(tabId) {
+    document.body.setAttribute('data-active-tab', tabId);
+
     document.querySelectorAll('.capsule-tab').forEach(t => {
       if (t.getAttribute('data-tab') === tabId) {
         t.classList.add('active');
+        t.setAttribute('aria-selected', 'true');
       } else {
         t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
       }
     });
 

@@ -22,6 +22,26 @@ html, body {
   overflow-x: hidden;
 }
 
+img, svg, canvas, video, audio {
+  max-width: 100%;
+  height: auto;
+}
+
+.cockpit-container,
+.cockpit-header,
+.cockpit-grid,
+.cockpit-hud-column,
+.cockpit-main-column,
+.cockpit-panel-screen,
+.hud-panel,
+.glass-focus-card,
+.telemetry-grid,
+.telemetry-tile {
+  box-sizing: border-box;
+  max-width: 100%;
+  min-width: 0;
+}
+
 /* Master Glass Shell Container */
 .cockpit-container {
   max-width: 1200px;
@@ -190,27 +210,41 @@ html, body {
   display: none;
 }
 
-/* Mobile Breakpoint for Navigation (< 600px): Balanced 5-Column Grid (RULE-12 Non-Orphan Layout) */
+/* Mobile Breakpoint for Navigation (< 600px): Balanced 5-Column Grid (RULE-12 Non-Orphan Layout) & Edge Hygiene (RULE-15) */
 @media (max-width: 600px) {
+  .cockpit-container {
+    padding: 10px 10px 80px 10px;
+    gap: 12px;
+  }
   .cockpit-header {
     flex-direction: column;
     align-items: stretch;
-    gap: 12px;
+    gap: 10px;
+    padding: 10px 12px;
+  }
+  .brand-telemetry {
+    width: 100%;
+  }
+  .brand-title {
+    font-size: 1.15rem;
   }
   .header-status-capsules {
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
     gap: 6px;
+    justify-content: flex-start;
   }
   .header-status-capsules .capsule-badge,
   .header-status-capsules .btn-fog-cockpit {
-    flex: 1;
+    flex: 1 1 auto;
+    min-width: 0;
     text-align: center;
-    padding: 6px 4px;
+    padding: 6px 8px;
     font-size: 0.72rem;
     white-space: nowrap;
     justify-content: center;
+    box-sizing: border-box;
   }
   .capsule-nav {
     display: grid;
@@ -239,6 +273,46 @@ html, body {
   .tab-label-short {
     display: inline;
   }
+  .telemetry-grid {
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .telemetry-tile {
+    padding: 10px 8px;
+    min-width: 0;
+  }
+  .tile-value {
+    font-size: 1.25rem;
+  }
+  .tile-label, .tile-sub {
+    font-size: 0.68rem;
+  }
+  .glass-focus-card {
+    padding: 14px 12px;
+  }
+  .hud-panel {
+    padding: 14px 12px;
+  }
+  .hud-task-title {
+    font-size: 1.1rem;
+  }
+  .cockpit-panel-screen {
+    padding: 16px 12px;
+  }
+  .grid-courses, #grid-courses {
+    grid-template-columns: 1fr !important;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 380px) {
+  .header-status-capsules .capsule-badge {
+    flex: 1 1 calc(50% - 4px);
+  }
+  .header-status-capsules .btn-fog-cockpit {
+    flex: 1 1 100%;
+    width: 100%;
+  }
 }
 
 /* Split Dual-Column Glass Cockpit Grid (RULE-03) */
@@ -252,6 +326,15 @@ html, body {
 @media (max-width: 900px) {
   .cockpit-grid {
     grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  /* CRITICAL MOBILE RESILIENCE (RULE-15):
+     When on viewports <= 900px, the HUD column is only displayed when on the 'dashboard' tab.
+     When the user switches to Tasks, Courses, Exams, or Settings, hide the HUD column
+     so that the selected screen displays directly below the navigation bar! */
+  body:not([data-active-tab="dashboard"]) .cockpit-hud-column {
+    display: none !important;
   }
 }
 
@@ -354,8 +437,10 @@ html, body {
   font-size: 1.25rem;
   font-weight: 800;
   color: var(--text-main);
-  line-height: 1.25;
+  line-height: 1.3;
   margin-bottom: 12px;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .hud-step-pill {
@@ -370,6 +455,15 @@ html, body {
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--text-main);
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Course Grid Architecture */
+.grid-courses, #grid-courses {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
 }
 
 /* Focus Sprint Timer Floating in Cockpit */
