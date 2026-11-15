@@ -455,11 +455,30 @@
     if (!hero.hasTask) {
       container.innerHTML = `
         <div class="hud-tag">✨ Academic Flight Radar</div>
-        <div class="hud-task-title">${hero.message}</div>
-        <p style="color: var(--text-dim); font-size: 0.85rem;">
-          Executive momentum preserved. Review telemetry or engage a restorative break.
+        <div class="hud-task-title" style="margin-top: 6px; font-size: 1.15rem; font-weight: 800; color: var(--color-accent);">${hero.message}</div>
+        <p style="color: var(--text-dim); font-size: 0.85rem; margin-top: 6px; line-height: 1.4;">
+          Executive momentum preserved. Add your next deliverable or reload sample data to test workflows.
         </p>
+        <div style="display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap;">
+          <button class="btn-glass btn-glass-sm btn-glass-primary" id="btn-hero-add-asg">+ Add Deliverable</button>
+          <button class="btn-glass btn-glass-sm btn-glass-secondary" id="btn-hero-view-asgs">View Deliverables</button>
+          <button class="btn-glass btn-glass-sm btn-glass-secondary" id="btn-hero-restore-demo" style="font-size: 0.72rem; color: var(--text-dim);">↺ Reload Sample Tasks</button>
+        </div>
       `;
+
+      const btnAdd = container.querySelector('#btn-hero-add-asg');
+      if (btnAdd) btnAdd.addEventListener('click', () => openModal('modal-add-assignment'));
+
+      const btnView = container.querySelector('#btn-hero-view-asgs');
+      if (btnView) btnView.addEventListener('click', () => switchTab('assignments'));
+
+      const btnRestore = container.querySelector('#btn-hero-restore-demo');
+      if (btnRestore) {
+        btnRestore.addEventListener('click', () => {
+          state = window.StudentStorage.reset();
+          renderAll();
+        });
+      }
       return;
     }
 
@@ -559,6 +578,9 @@
       asg.completed = true;
       asg.completedDate = getTodayISO();
       playCyberChime('sprint');
+    } else {
+      asg.completed = false;
+      asg.completedDate = null;
     }
 
     window.StudentStorage.save(state);
@@ -569,11 +591,17 @@
   function markAssignmentComplete(asgId) {
     const asg = state.assignments.find(a => a.id === asgId);
     if (!asg) return;
-    asg.completed = true;
-    asg.completedDate = getTodayISO();
+    asg.completed = !asg.completed;
+    asg.completedDate = asg.completed ? getTodayISO() : null;
     if (asg.dechunkedMilestones) {
-      asg.dechunkedMilestones.forEach(m => { m.done = true; });
+      asg.dechunkedMilestones.forEach(m => { m.done = asg.completed; });
     }
+    if (asg.completed) {
+      playCyberChime('sprint');
+    }
+    window.StudentStorage.save(state);
+    renderAll();
+  }
     playCyberChime('sprint');
     window.StudentStorage.save(state);
     renderAll();
@@ -605,10 +633,23 @@
         <div class="hud-panel" style="text-align: center; padding: 40px 20px;">
           <h3 style="font-size: 1.1rem; color: var(--text-main); margin-bottom: 6px;">Zero Cognitive Drag</h3>
           <p style="color: var(--text-dim); font-size: 0.88rem;">
-            ${state.settings.fogMode ? 'Burnout Shield active: distant assignments suppressed.' : 'No pending assignments.'}
+            ${state.settings.fogMode ? 'Burnout Shield active: distant assignments suppressed.' : 'All assignments completed or queue clear.'}
           </p>
+          <div style="margin-top: 16px; display: flex; justify-content: center; gap: 8px; flex-wrap: wrap;">
+            <button class="btn-glass btn-glass-sm btn-glass-primary" id="btn-asg-empty-add">+ Add Deliverable</button>
+            <button class="btn-glass btn-glass-sm btn-glass-secondary" id="btn-asg-empty-reload">↺ Reload Sample Deliverables</button>
+          </div>
         </div>
       `;
+      const btnAdd = container.querySelector('#btn-asg-empty-add');
+      if (btnAdd) btnAdd.addEventListener('click', () => openModal('modal-add-assignment'));
+      const btnReload = container.querySelector('#btn-asg-empty-reload');
+      if (btnReload) {
+        btnReload.addEventListener('click', () => {
+          state = window.StudentStorage.reset();
+          renderAll();
+        });
+      }
       return;
     }
 

@@ -134,8 +134,21 @@
         els.sectionTag.textContent = `📍 ${step.sectionName}`;
       }
       els.title.textContent = step.title;
-      els.message.textContent = step.message;
-      els.hint.textContent = step.actionHint;
+
+      if (currentStep === 0) {
+        const hasHeroTask = targetEl && !targetEl.textContent.includes('All assignments completed') && !targetEl.textContent.includes('No pending assignments');
+        if (!hasHeroTask) {
+          els.message.textContent = 'Syllabus overwhelm destroys focus. When coursework is active, this Flight Radar isolates your single highest-yield micro-step right now.';
+          els.hint.textContent = 'Tap "+ Add Deliverable" anytime to break assignments into micro-chunks.';
+        } else {
+          els.message.textContent = step.message;
+          els.hint.textContent = step.actionHint;
+        }
+      } else {
+        els.message.textContent = step.message;
+        els.hint.textContent = step.actionHint;
+      }
+
       els.stepCount.textContent = `Step ${currentStep + 1} of ${TOUR_STEPS.length}`;
 
       els.btnPrev.style.display = currentStep === 0 ? 'none' : 'inline-block';

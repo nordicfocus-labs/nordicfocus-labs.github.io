@@ -186,25 +186,58 @@ html, body {
   box-shadow: var(--nav-tab-active-shadow);
 }
 
-/* Mobile Breakpoint for Navigation (< 440px): 3x2 responsive grid */
+.tab-label-short {
+  display: none;
+}
+
+/* Mobile Breakpoint for Navigation (< 600px): Balanced 5-Column Grid (RULE-12 Non-Orphan Layout) */
 @media (max-width: 600px) {
   .cockpit-header {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
+    gap: 12px;
   }
   .header-status-capsules {
     width: 100%;
+    display: flex;
     justify-content: space-between;
+    gap: 6px;
+  }
+  .header-status-capsules .capsule-badge,
+  .header-status-capsules .btn-fog-cockpit {
+    flex: 1;
+    text-align: center;
+    padding: 6px 4px;
+    font-size: 0.72rem;
+    white-space: nowrap;
+    justify-content: center;
   }
   .capsule-nav {
-    grid-template-columns: repeat(3, 1fr);
-    border-radius: var(--radius-card);
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+    padding: 4px;
+    border-radius: var(--radius-pill);
   }
   .capsule-tab {
-    padding: 8px 6px;
-    font-size: 0.75rem;
+    padding: 8px 2px;
+    font-size: 0.68rem;
+    font-weight: 700;
     flex-direction: column;
-    gap: 4px;
+    gap: 3px;
+    text-align: center;
+    min-width: 0;
+  }
+  .capsule-tab svg {
+    width: 18px;
+    height: 18px;
+    margin: 0 auto;
+  }
+  .tab-label-full {
+    display: none;
+  }
+  .tab-label-short {
+    display: inline;
   }
 }
 
