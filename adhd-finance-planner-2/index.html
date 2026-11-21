@@ -16,9 +16,9 @@
       filter: none !important;
     }
   </style>
-  <link rel="stylesheet" href="css/theme.css?v=2.0.2">
-  <link rel="stylesheet" href="css/app.css?v=2.0.2">
-  <link rel="stylesheet" href="css/components.css?v=2.0.2">
+  <link rel="stylesheet" href="css/theme.css?v=2.0.3">
+  <link rel="stylesheet" href="css/app.css?v=2.0.3">
+  <link rel="stylesheet" href="css/components.css?v=2.0.3">
 </head>
 <body data-theme="nordic-glass" data-active-tab="cockpit">
 
@@ -57,16 +57,6 @@
       <aside class="cockpit-hud" aria-label="Executive Financial Telemetry HUD">
         <section id="hero-pulse" class="glass hero-card" aria-label="Safe Discretionary Velocity Pool"></section>
 
-        <section class="glass fog-hide" aria-label="4-Tile Executive Telemetry">
-          <div class="card-title">Executive Telemetry Quad</div>
-          <div class="telemetry-4">
-            <div class="telemetry-tile"><div id="stat-checking" class="telemetry-val">$0.00</div><div class="telemetry-lbl">Liquid Checking</div></div>
-            <div class="telemetry-tile"><div id="stat-promised" class="telemetry-val">$0.00</div><div class="telemetry-lbl">Locked Holds</div></div>
-            <div class="telemetry-tile"><div id="stat-runway" class="telemetry-val">0 days</div><div class="telemetry-lbl">Safety Runway</div></div>
-            <div class="telemetry-tile"><div id="stat-daily" class="telemetry-val">$0.00</div><div class="telemetry-lbl">Daily Velocity</div></div>
-          </div>
-        </section>
-
         <section class="glass fog-hide" aria-label="Command Line Expense Capture">
           <div class="card-title">Command Bar · Rapid Outflow</div>
           <div class="inline-form">
@@ -81,6 +71,16 @@
             <button type="button" class="chip" data-cents="2500" data-label="Dopamine Impulse">$25.00</button>
           </div>
           <button id="btn-qa-spend" class="btn btn-primary" type="button" style="width:100%;">Commit Spend</button>
+        </section>
+
+        <section class="glass fog-hide" aria-label="4-Tile Executive Telemetry">
+          <div class="card-title">Executive Telemetry Quad</div>
+          <div class="telemetry-4">
+            <div class="telemetry-tile"><div id="stat-checking" class="telemetry-val">$0.00</div><div class="telemetry-lbl">Liquid Checking</div></div>
+            <div class="telemetry-tile"><div id="stat-promised" class="telemetry-val">$0.00</div><div class="telemetry-lbl">Locked Holds</div></div>
+            <div class="telemetry-tile"><div id="stat-runway" class="telemetry-val">0 days</div><div class="telemetry-lbl">Safety Runway</div></div>
+            <div class="telemetry-tile"><div id="stat-daily" class="telemetry-val">$0.00</div><div class="telemetry-lbl">Daily Velocity</div></div>
+          </div>
         </section>
       </aside>
 
@@ -407,15 +407,15 @@
     if ('caches' in window) {
       caches.keys().then(function (keys) {
         keys.forEach(function (k) {
-          if (k.indexOf('adhd-finance-planner-2-v1') !== -1) caches.delete(k);
+          if (k !== 'adhd-finance-planner-2-v3') caches.delete(k);
         });
       }).catch(function () {});
     }
   </script>
-  <script src="js/engine.js?v=2.0.2"></script>
-  <script src="js/storage.js?v=2.0.2"></script>
-  <script src="js/config.js?v=2.0.2"></script>
-  <script src="js/tutorials.js?v=2.0.2"></script>
-  <script src="js/app.js?v=2.0.2"></script>
+  <script src="js/engine.js?v=2.0.3"></script>
+  <script src="js/storage.js?v=2.0.3"></script>
+  <script src="js/config.js?v=2.0.3"></script>
+  <script src="js/tutorials.js?v=2.0.3"></script>
+  <script src="js/app.js?v=2.0.3"></script>
 </body>
 </html>
