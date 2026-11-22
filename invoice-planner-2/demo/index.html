@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DEMO — Invoice Planner 2 | Nordic Glass Cockpit</title>
+  <meta name="description" content="Interactive live demo of Invoice Planner 2 (Nordic Glass): Split-Cockpit Revenue Velocity HUD, 4-Lane AR Aging Kanban, 4-Vector Payout Tax Waterfall, Overdue Dispatch Desk &amp; Retainer Telemetry.">
+  <meta name="theme-color" content="#070f1a">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+  <style id="zero-blur-lockout">
+    #tutorial-overlay, .tutorial-overlay {
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      filter: none !important;
+    }
+  </style>
+  <link rel="stylesheet" href="demo-banner.css">
+  <script src="demo-guard.js"></script>
+  <link rel="stylesheet" href="../css/theme.css?v=2.0.3">
+  <link rel="stylesheet" href="../css/app.css?v=2.0.3">
+  <link rel="stylesheet" href="../css/components.css?v=2.0.3">
+</head>
+<body data-theme="nordic-glass" data-active-tab="cockpit">
+
+  <div class="shell">
+    <aside class="rail">
+      <div class="rail-brand">
+        <div class="brand-mark" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+        </div>
+        <div class="brand-text">
+          <h1 class="brand-title">Invoice Planner</h1>
+          <div class="brand-subtitle">Chloe's Cockpit · Live Interactive Demo</div>
+        </div>
+      </div>
+
+      <nav id="rail-nav" class="rail-nav" aria-label="Main Navigation">
+        <button class="nav-btn active" type="button" data-tab="cockpit"><span class="nav-ico">◎</span><span>Cockpit</span></button>
+        <button class="nav-btn" type="button" data-tab="pipeline"><span class="nav-ico">▦</span><span>AR Kanban</span></button>
+        <button class="nav-btn" type="button" data-tab="waterfall"><span class="nav-ico">⚡</span><span>Waterfall</span></button>
+        <button class="nav-btn" type="button" data-tab="dispatch"><span class="nav-ico">✉</span><span>Nudge Desk</span></button>
+        <button class="nav-btn" type="button" data-tab="retainers"><span class="nav-ico">↻</span><span>Retainers</span></button>
+        <button class="nav-btn" type="button" data-tab="settings"><span class="nav-ico">⚙</span><span>Config</span></button>
+      </nav>
+
+      <div class="rail-foot">
+        <span id="badge-collected" class="badge-pill" title="Total settled client invoice capital">$0.00 settled</span>
+        <button id="btn-launch-tour" class="btn btn-sm btn-secondary" type="button">Chloe's Guide</button>
+        <button id="btn-toggle-fog" class="btn btn-sm btn-ghost" type="button" aria-pressed="false">Burnout Shield</button>
+      </div>
+    </aside>
+
+    <div class="stage">
+      <aside class="cockpit-hud" aria-label="Executive Billing Telemetry HUD">
+        <section id="hero-pulse" class="glass hero-card" aria-label="Active Revenue Velocity Pool"></section>
+
+        <section class="glass fog-hide" aria-label="Command Line Billable Capture">
+          <div class="card-title">Command Bar · Rapid Billable Log</div>
+          <div class="inline-form">
+            <input id="qa-work-client" class="input" type="text" maxlength="100" placeholder="Client (e.g. Lumen Botanicals)" autocomplete="off">
+            <input id="qa-work-title" class="input" type="text" maxlength="120" placeholder="Deliverable (e.g. UX Sprint, API Integration)" autocomplete="off">
+            <input id="qa-work-amount" class="input" type="number" min="0.01" max="1000000" step="0.01" value="150.00" style="max-width:110px;" aria-label="Amount">
+          </div>
+          <div class="chip-label">Velocity Rate Presets</div>
+          <div id="qa-amount-chips" class="chip-row" role="group" aria-label="Velocity rate presets">
+            <button type="button" class="chip selected" data-cents="15000" data-label="Strategy / Consult">$150</button>
+            <button type="button" class="chip" data-cents="45000" data-label="Execution Sprint">$450</button>
+            <button type="button" class="chip" data-cents="85000" data-label="Milestone Block">$850</button>
+            <button type="button" class="chip" data-cents="120000" data-label="Retainer Cycle">$1,200</button>
+          </div>
+          <button id="btn-qa-work" class="btn btn-primary" type="button" style="width:100%;">Commit Work Item</button>
+        </section>
+
+        <section class="glass fog-hide" aria-label="4-Tile Executive Telemetry">
+          <div class="card-title">Executive Revenue Telemetry Quad</div>
+          <div class="telemetry-4">
+            <div class="telemetry-tile"><div id="stat-awaiting" class="telemetry-val">$0.00</div><div class="telemetry-lbl">Awaiting AR</div></div>
+            <div class="telemetry-tile"><div id="stat-unbilled" class="telemetry-val">$0.00</div><div class="telemetry-lbl">Unbilled Queue</div></div>
+            <div class="telemetry-tile"><div id="stat-tax-vault" class="telemetry-val">$0.00</div><div class="telemetry-lbl">Tax Shield Vault</div></div>
+            <div class="telemetry-tile"><div id="stat-owner-safe" class="telemetry-val">$0.00</div><div class="telemetry-lbl">Net Owner Cash</div></div>
+          </div>
+        </section>
+      </aside>
+
+      <div class="cockpit-main">
+        <!-- Screen 1: Cockpit -->
+        <main id="screen-cockpit" class="app-screen active">
+          <section class="glass fog-hide" aria-label="Unbilled work queue">
+            <div class="card-title">
+              <span>Unbilled Work Queue (1-Click Invoice Conversion)</span>
+              <button class="btn btn-secondary btn-sm" type="button" data-open-modal="modal-add-invoice">+ New Invoice</button>
+            </div>
+            <div id="unbilled-work-list" class="list"></div>
+          </section>
+
+          <section class="glass fog-hide" aria-label="14-day inflow heatmap">
+            <div class="card-title">
+              <span>14-Day Inflow &amp; Retainer Heatmap</span>
+              <span id="weather-status-tag" class="tag ok">Nominal Pipeline</span>
+            </div>
+            <div id="weather-ribbon" class="weather-grid"></div>
+          </section>
+        </main>
+
+        <!-- Screen 2: Pipeline -->
+        <section id="screen-pipeline" class="app-screen">
+          <div class="screen-head">
+            <div>
+              <h2>Accounts Receivable Kanban Matrix</h2>
+              <p class="muted">4-Lane AR board isolating Drafts, Active Net-Terms, Overdue Action Required, and Settled Capital.</p>
+            </div>
+            <button class="btn btn-primary btn-sm" type="button" data-open-modal="modal-add-invoice">+ Deploy Invoice</button>
+          </div>
+
+          <div id="invoices-card" class="glass">
+            <div id="ar-kanban-board" class="kanban-board"></div>
+          </div>
+        </section>
+
+        <!-- Screen 3: Waterfall -->
+        <section id="screen-waterfall" class="app-screen">
+          <div class="screen-head">
+            <div>
+              <h2>Payout Tax Waterfall Splitter</h2>
+              <p class="muted">Route settled client invoice inflows across 4 deterministic vectors with 100% penny conservation.</p>
+            </div>
+          </div>
+
+          <div id="payout-card" class="glass">
+            <div class="card-title">1. Configure Settled Inflow Capital</div>
+            <div class="grid-2">
+              <label class="field">
+                <span>Settlement Source Label</span>
+                <input id="pay-label" class="input" type="text" maxlength="80" value="Settled Client Invoice" autocomplete="off">
+              </label>
+              <label class="field">
+                <span>Net Payment Amount ($)</span>
+                <input id="pay-amount" class="input" type="number" min="1" max="1000000" step="0.01" value="1600.00">
+              </label>
+            </div>
+            <div class="chip-label">Select Allocation Vector</div>
+            <div id="pay-preset-chips" class="chip-row" role="group" aria-label="Waterfall presets">
+              <button type="button" class="chip selected" data-preset="standard">Standard 25 / 15 / 10 / 50</button>
+              <button type="button" class="chip" data-preset="taxheavy">High-Tax Shield 30 / 15 / 15 / 40</button>
+              <button type="button" class="chip" data-preset="lean">Solo Operator 20 / 10 / 15 / 55</button>
+              <button type="button" class="chip" data-preset="growth">Studio Scale 25 / 25 / 15 / 35</button>
+            </div>
+
+            <div id="payout-preview" class="split-grid"></div>
+
+            <div class="row-actions">
+              <button id="btn-run-payout" class="btn btn-primary" type="button">Execute Payout Waterfall</button>
+            </div>
+          </div>
+
+          <div class="glass">
+            <div class="card-title">Executed Payout Waterfall Log</div>
+            <div id="payout-history-list" class="list"></div>
+          </div>
+        </section>
+
+        <!-- Screen 4: Dispatch -->
+        <section id="screen-dispatch" class="app-screen">
+          <div class="screen-head">
+            <div>
+              <h2>Overdue Dispatch &amp; Follow-Up Desk</h2>
+              <p class="muted">Generate zero-friction client payment dispatches pre-populated with exact invoice telemetry.</p>
+            </div>
+          </div>
+
+          <div id="followup-card" class="glass">
+            <div class="card-title">1. Select Target Invoice &amp; Dispatch Protocol</div>
+            <div class="grid-2">
+              <label class="field">
+                <span>Target Open Invoice</span>
+                <select id="followup-invoice-select" class="input" aria-label="Select invoice for dispatch"></select>
+              </label>
+              <div>
+                <div class="chip-label" style="margin-top:0;">Dispatch Tone Protocol</div>
+                <div id="followup-tone-chips" class="chip-row" role="group" aria-label="Dispatch tone">
+                  <button type="button" class="chip selected" data-tone="warm">Warm Pre-Due</button>
+                  <button type="button" class="chip" data-tone="gentle">Gentle Overdue Nudge</button>
+                  <button type="button" class="chip" data-tone="firm">Firm Past-Due Notice</button>
+                </div>
+              </div>
+            </div>
+            <label class="field">
+              <span>Compiled Client Dispatch Payload (Editable)</span>
+              <textarea id="followup-script-box" class="input" rows="6"></textarea>
+            </label>
+            <div class="row-actions">
+              <button id="btn-copy-script" class="btn btn-primary" type="button">📋 Copy Dispatch to Clipboard</button>
+            </div>
+          </div>
+
+          <div class="glass">
+            <div class="card-title">Executive AR Triage Desk (Overdue &amp; Imminent Items)</div>
+            <div id="triage-list" class="list"></div>
+          </div>
+        </section>
+
+        <!-- Screen 5: Retainers -->
+        <section id="screen-retainers" class="app-screen">
+          <div class="screen-head">
+            <div>
+              <h2>Recurring Retainer Nodes &amp; Treasury Sync</h2>
+              <p class="muted">Automate recurring client billing cycles with anti-double-counting balance synchronization.</p>
+            </div>
+            <button class="btn btn-primary btn-sm" type="button" data-open-modal="modal-add-retainer">+ New Retainer Node</button>
+          </div>
+
+          <div id="retainers-summary-card" class="glass"></div>
+
+          <div id="retainers-card" class="glass">
+            <div class="card-title">Active &amp; Paused Retainer Nodes</div>
+            <div id="retainers-list" class="list"></div>
+          </div>
+
+          <div class="glass">
+            <div class="card-title">Anti-Double-Counting Business Checking Sync</div>
+            <p class="muted" style="margin-bottom:10px;">Sync your real business checking balance anytime. Invoices settled earlier today are never added twice.</p>
+            <div class="inline-form">
+              <input id="sync-balance-input" class="input" type="number" step="0.01" placeholder="Current business checking balance ($)">
+              <button id="btn-sync-balance" class="btn btn-primary" type="button">Sync Snapshot</button>
+            </div>
+            <div id="accounts-list" class="list" style="margin-top:12px;"></div>
+          </div>
+        </section>
+
+        <!-- Screen 6: System Config -->
+        <section id="screen-settings" class="app-screen">
+          <div class="screen-head">
+            <div>
+              <h2>System Configuration</h2>
+              <p class="muted">100% browser-local execution. Zero cloud dependencies.</p>
+            </div>
+          </div>
+
+          <div class="glass">
+            <div class="card-title">Nordic Visual Matrix Themes</div>
+            <div id="theme-picker" class="chip-row"></div>
+            <label class="switch-row">
+              <span>Acoustic telemetry confirmation cues</span>
+              <input id="set-sound" type="checkbox" checked>
+            </label>
+          </div>
+
+          <div class="glass">
+            <div class="card-title">Studio Identity, Net Terms &amp; Monthly Revenue Target</div>
+            <div class="grid-2">
+              <label class="field">
+                <span>Studio / Operator Entity Name</span>
+                <input id="set-business-name" class="input" type="text" maxlength="80" value="Nordic Focus Studio">
+              </label>
+              <label class="field">
+                <span>Default Payment Terms</span>
+                <select id="set-default-terms" class="input">
+                  <option value="receipt">Due on Receipt</option>
+                  <option value="net7">Net 7 Days</option>
+                  <option value="net14">Net 14 Days</option>
+                  <option value="net30">Net 30 Days</option>
+                </select>
+              </label>
+            </div>
+            <div class="grid-2">
+              <label class="field">
+                <span>Monthly Revenue Target ($)</span>
+                <input id="set-monthly-target" class="input" type="number" min="100" max="1000000" step="100" value="5000">
+              </label>
+              <label class="field">
+                <span>Base Currency</span>
+                <select id="set-currency" class="input">
+                  <option value="USD">USD ($)</option>
+                  <option value="CAD">CAD (CA$)</option>
+                  <option value="GBP">GBP (£)</option>
+                  <option value="EUR">EUR (€)</option>
+                  <option value="AUD">AUD (A$)</option>
+                </select>
+              </label>
+            </div>
+            <button id="btn-save-settings" class="btn btn-primary btn-sm" type="button">Commit Parameters</button>
+          </div>
+
+          <div class="glass">
+            <div class="card-title">Clean Slate, Sample Telemetry &amp; Encrypted Backups</div>
+            <div class="row-actions">
+              <button id="btn-clean-slate" class="btn btn-secondary" type="button">🧹 Start Clean Slate</button>
+              <button id="btn-load-sample" class="btn btn-secondary" type="button">🌱 Load Sample Data</button>
+              <button id="btn-restart-tour" class="btn btn-ghost" type="button">Replay Chloe's Tour</button>
+            </div>
+            <div class="row-actions" style="margin-top:10px;">
+              <button id="btn-export-json" class="btn btn-secondary" type="button">Export JSON Snapshot</button>
+              <button id="btn-import-json" class="btn btn-secondary" type="button">Import JSON Snapshot</button>
+              <input id="file-import" type="file" accept="application/json,.json" style="display:none;">
+              <button id="btn-reset-data" class="btn btn-danger-soft" type="button">Purge All Data</button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 1: Add / Deploy Invoice -->
+  <div id="modal-add-invoice" class="app-modal" role="dialog" aria-modal="true" aria-labelledby="add-inv-h">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3 id="add-inv-h">Deploy Client Invoice</h3>
+        <button class="btn-x" type="button" data-close-modal="modal-add-invoice" aria-label="Close">×</button>
+      </div>
+      <div class="grid-2">
+        <label class="field"><span>Client Entity</span><input id="inv-client" class="input" type="text" maxlength="100" placeholder="e.g. Northstar Wellness Co."></label>
+        <label class="field"><span>Project / Deliverable Vector</span><input id="inv-title" class="input" type="text" maxlength="120" placeholder="e.g. Architecture &amp; UI Sprint"></label>
+      </div>
+      <div class="grid-2">
+        <label class="field"><span>Subtotal Amount ($)</span><input id="inv-amount" class="input" type="number" min="0.01" step="0.01" value="850.00"></label>
+        <label class="field"><span>Payment Terms</span><select id="inv-terms" class="input">
+          <option value="net14">Net 14 Days</option>
+          <option value="net7">Net 7 Days</option>
+          <option value="net30">Net 30 Days</option>
+          <option value="receipt">Due on Receipt</option>
+        </select></label>
+      </div>
+      <div class="grid-2">
+        <label class="field"><span>Tax (%)</span><input id="inv-tax" class="input" type="number" min="0" max="100" step="1" value="0"></label>
+        <label class="field"><span>Discount (%)</span><input id="inv-discount" class="input" type="number" min="0" max="100" step="1" value="0"></label>
+      </div>
+      <div class="grid-2">
+        <label class="field"><span>Deposit Received ($)</span><input id="inv-deposit" class="input" type="number" min="0" step="0.01" value="0"></label>
+        <label class="field"><span>Initial Lane</span><select id="inv-status" class="input">
+          <option value="sent">Sent (Active Net-Terms)</option>
+          <option value="draft">Draft Queue</option>
+        </select></label>
+      </div>
+      <label class="switch-row"><span>Shift weekend due dates to Friday early</span><input id="inv-weekend" type="checkbox" checked></label>
+      <p id="inv-error" class="form-error" role="alert"></p>
+      <div class="row-actions">
+        <button id="btn-save-invoice" class="btn btn-primary" type="button">Deploy Invoice</button>
+        <button class="btn btn-ghost" type="button" data-close-modal="modal-add-invoice">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Add Retainer Node -->
+  <div id="modal-add-retainer" class="app-modal" role="dialog" aria-modal="true" aria-labelledby="add-ret-h">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3 id="add-ret-h">Register Recurring Retainer Node</h3>
+        <button class="btn-x" type="button" data-close-modal="modal-add-retainer" aria-label="Close">×</button>
+      </div>
+      <label class="field"><span>Client Entity</span><input id="ret-client" class="input" type="text" maxlength="100" placeholder="e.g. Kindred Coffee Roasters"></label>
+      <label class="field"><span>Retainer Scope Descriptor</span><input id="ret-title" class="input" type="text" maxlength="120" placeholder="e.g. Monthly Systems &amp; UX Retainer"></label>
+      <div class="grid-2">
+        <label class="field"><span>Fee per Cycle ($)</span><input id="ret-amount" class="input" type="number" min="1" step="0.01" value="950.00"></label>
+        <label class="field"><span>Billing Cycle</span><select id="ret-cycle" class="input">
+          <option value="monthly">Monthly</option>
+          <option value="quarterly">Quarterly</option>
+          <option value="weekly">Weekly</option>
+          <option value="yearly">Yearly</option>
+        </select></label>
+      </div>
+      <label class="field"><span>Next Billing Date</span><input id="ret-next-date" class="input" type="date"></label>
+      <p id="ret-error" class="form-error" role="alert"></p>
+      <div class="row-actions">
+        <button id="btn-save-retainer" class="btn btn-primary" type="button">Register Node</button>
+        <button class="btn btn-ghost" type="button" data-close-modal="modal-add-retainer">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 3: Printable Invoice Preview Sheet -->
+  <div id="modal-preview-invoice" class="app-modal" role="dialog" aria-modal="true" aria-labelledby="prev-inv-h">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3 id="prev-inv-h">Client Invoice Summary Sheet</h3>
+        <button class="btn-x" type="button" data-close-modal="modal-preview-invoice" aria-label="Close">×</button>
+      </div>
+      <div id="invoice-preview-body" class="invoice-preview-sheet"></div>
+      <div class="row-actions">
+        <button id="btn-print-invoice" class="btn btn-primary" type="button">🖨 Print / Save PDF</button>
+        <button id="btn-copy-invoice" class="btn btn-secondary" type="button">📋 Copy Invoice Summary</button>
+        <button class="btn btn-ghost" type="button" data-close-modal="modal-preview-invoice">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 4: Confirm -->
+  <div id="modal-confirm" class="app-modal" role="dialog" aria-modal="true" aria-labelledby="confirm-h">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3 id="confirm-h">Confirm Execution</h3>
+        <button class="btn-x" type="button" data-close-modal="modal-confirm" aria-label="Close">×</button>
+      </div>
+      <p id="confirm-text" class="muted" style="margin-bottom:14px;"></p>
+      <div class="row-actions">
+        <button id="btn-confirm-yes" class="btn btn-danger-soft" type="button">Confirm</button>
+        <button class="btn btn-ghost" type="button" data-close-modal="modal-confirm">Abort</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <div id="tutorial-overlay" class="tutorial-overlay" style="display:none;">
+    <div id="tutorial-card" class="tutorial-card" style="display:none;" role="dialog" aria-live="polite" aria-labelledby="tutorial-title">
+      <div class="tour-head">
+        <div class="tour-avatar" aria-hidden="true">C</div>
+        <div>
+          <div id="tutorial-section-tag" class="tour-tag"></div>
+          <div id="tutorial-title" class="tour-title"></div>
+        </div>
+        <div id="tutorial-step-count" class="tour-count"></div>
+      </div>
+      <p id="tutorial-message" class="tour-msg"></p>
+      <p id="tutorial-hint" class="tour-hint"></p>
+      <div class="tour-actions">
+        <button id="tutorial-btn-skip" class="btn btn-ghost btn-sm" type="button">Skip tour</button>
+        <span class="spacer"></span>
+        <button id="tutorial-btn-prev" class="btn btn-secondary btn-sm" type="button">Back</button>
+        <button id="tutorial-btn-next" class="btn btn-primary btn-sm" type="button">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    if ('caches' in window) {
+      caches.keys().then(function (keys) {
+        keys.forEach(function (k) {
+          if (k !== 'invoice-planner-2-v1') caches.delete(k);
+        });
+      }).catch(function () {});
+    }
+  </script>
+  <script src="../js/engine.js?v=2.0.3"></script>
+  <script src="../js/storage.js?v=2.0.3"></script>
+  <script src="../js/config.js?v=2.0.3"></script>
+  <script src="../js/tutorials.js?v=2.0.3"></script>
+  <script src="../js/app.js?v=2.0.3"></script>
+</body>
+</html>

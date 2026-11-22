@@ -1,0 +1,323 @@
+/**
+ * Invoice Planner 2 — Edition 2 (Nordic Focus Systems / Chloe) Split-Cockpit Layout
+ * Enforces G-03 (Split Dual-Column Cockpit + AR Kanban Matrix), G-04 (#070f1a), G-05 (<400px 3x2 nav),
+ * G-14 (6%3==0 nav symmetry), G-15 (hide HUD sidebar on non-dashboard mobile tabs <=900px), and G-23.
+ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  min-height: 100vh;
+  overflow-x: clip;
+}
+
+.shell {
+  display: grid;
+  grid-template-columns: 230px minmax(0, 1fr);
+  min-height: 100vh;
+  max-width: 1380px;
+  margin: 0 auto;
+}
+
+/* Left Rail Navigation (Desktop) / Top Capsule Bar (Mobile) */
+.rail {
+  background: var(--bg-elevated);
+  border-right: 1px solid var(--border);
+  padding: 20px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 0;
+}
+
+.rail-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.brand-mark {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.brand-title {
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  font-weight: 800;
+  color: var(--text-main);
+  word-break: break-word;
+}
+
+.brand-subtitle {
+  font-size: 0.73rem;
+  color: var(--text-muted);
+}
+
+.rail-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.nav-btn {
+  appearance: none;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-muted);
+  border-radius: 12px;
+  padding: 10px 12px;
+  min-height: 44px;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s, color 0.15s;
+}
+
+.nav-btn.active {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-color: var(--border);
+}
+
+.rail-foot {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Split Dual-Column Cockpit Stage */
+.stage {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 350px minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+  min-width: 0;
+}
+
+.cockpit-hud {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+.cockpit-main {
+  min-width: 0;
+}
+
+.app-screen {
+  display: none;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.app-screen.active {
+  display: flex;
+}
+
+body.fog .fog-hide {
+  display: none !important;
+}
+
+.glass,
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+  box-shadow: var(--shadow);
+  min-width: 0;
+}
+
+.card-title {
+  font-size: 0.94rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.screen-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.screen-head h2 {
+  font-size: clamp(1.15rem, 2.4vw, 1.4rem);
+  font-weight: 800;
+}
+
+.muted {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+/* 4-Tile Telemetry Grid (Exclusive to Edition 2) */
+.telemetry-4 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  min-width: 0;
+}
+
+.telemetry-tile {
+  background: var(--surface-muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  min-width: 0;
+}
+
+.telemetry-val {
+  font-size: clamp(1.02rem, 2vw, 1.25rem);
+  font-weight: 800;
+  color: var(--accent);
+  word-break: break-word;
+}
+
+.telemetry-lbl {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+/* 4-Lane Kanban Accounts Receivable Matrix (Exclusive to Edition 2) */
+.kanban-board {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  min-width: 0;
+}
+
+.kanban-lane {
+  background: var(--surface-muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.kanban-lane-head {
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--cyan);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  min-width: 0;
+}
+
+/* RULE-15: Mobile Multi-Column Screen Isolation (<= 900px) */
+@media (max-width: 900px) {
+  .shell {
+    grid-template-columns: 1fr;
+  }
+  .rail {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding: 12px 10px;
+    gap: 10px;
+  }
+  .rail-nav {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+  .nav-btn {
+    justify-content: center;
+    padding: 8px 6px;
+    font-size: 0.76rem;
+  }
+  .rail-foot {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .stage {
+    grid-template-columns: 1fr;
+    padding: 12px 10px 40px;
+  }
+  /* Hide persistent HUD sidebar when active tab is NOT cockpit */
+  body:not([data-active-tab="cockpit"]) .cockpit-hud {
+    display: none !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .stage {
+    padding: 10px 10px 36px;
+  }
+  .glass, .card {
+    padding: 14px;
+  }
+  .grid-2,
+  .kanban-board {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 400px) {
+  .rail-nav {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+  }
+  .telemetry-4 {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
