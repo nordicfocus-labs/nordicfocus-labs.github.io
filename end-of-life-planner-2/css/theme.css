@@ -1,0 +1,92 @@
+/**
+ * End of Life Planner 2 — Edition 2 (Nordic Focus Systems / Chloe) Theme Tokens
+ * Shop 2 Brand DNA: Deep Nordic Canvas (#070f1a), Translucent Glass Surfaces, Electric Teal (#2dd4bf) & Sky (#38bdf8).
+ */
+:root,
+body[data-theme="nordic-glass"] {
+  --bg-primary: #070f1a;
+  --bg-elevated: #0c1829;
+  --surface: rgba(14, 27, 44, 0.88);
+  --surface-muted: rgba(20, 38, 60, 0.72);
+  --border: rgba(56, 189, 248, 0.22);
+  --text-main: #f1f5f9;
+  --text-muted: #94a3b8;
+  --accent: #2dd4bf;
+  --accent-strong: #14b8a6;
+  --accent-soft: rgba(45, 212, 191, 0.14);
+  --sky: #38bdf8;
+  --gold: #fbbf24;
+  --gold-soft: rgba(251, 191, 36, 0.14);
+  --ok: #34d399;
+  --ok-soft: rgba(52, 211, 153, 0.14);
+  --danger: #f87171;
+  --danger-soft: rgba(248, 113, 113, 0.14);
+  --shadow: 0 14px 36px rgba(0, 0, 0, 0.42);
+  --radius: 16px;
+}
+
+body[data-theme="arctic-slate"] {
+  --bg-primary: #0b1320;
+  --bg-elevated: #111c2e;
+  --surface: rgba(22, 34, 54, 0.9);
+  --surface-muted: rgba(30, 45, 70, 0.72);
+  --border: rgba(125, 211, 252, 0.24);
+  --text-main: #f8fafc;
+  --text-muted: #9fb2c9;
+  --accent: #38bdf8;
+  --accent-strong: #0284c7;
+  --accent-soft: rgba(56, 189, 248, 0.16);
+  --sky: #7dd3fc;
+  --gold: #fbbf24;
+  --gold-soft: rgba(251, 191, 36, 0.14);
+  --ok: #34d399;
+  --ok-soft: rgba(52, 211, 153, 0.14);
+  --danger: #f87171;
+  --danger-soft: rgba(248, 113, 113, 0.14);
+  --shadow: 0 14px 36px rgba(0, 0, 0, 0.45);
+  --radius: 16px;
+}
+
+body[data-theme="emerald-stealth"] {
+  --bg-primary: #061310;
+  --bg-elevated: #0a1f1a;
+  --surface: rgba(12, 34, 29, 0.9);
+  --surface-muted: rgba(18, 48, 40, 0.74);
+  --border: rgba(52, 211, 153, 0.24);
+  --text-main: #ecfdf5;
+  --text-muted: #93b8ab;
+  --accent: #10b981;
+  --accent-strong: #059669;
+  --accent-soft: rgba(16, 185, 129, 0.16);
+  --sky: #2dd4bf;
+  --gold: #f59e0b;
+  --gold-soft: rgba(245, 158, 11, 0.15);
+  --ok: #34d399;
+  --ok-soft: rgba(52, 211, 153, 0.15);
+  --danger: #f87171;
+  --danger-soft: rgba(248, 113, 113, 0.15);
+  --shadow: 0 14px 36px rgba(0, 0, 0, 0.48);
+  --radius: 16px;
+}
+
+body[data-theme="oled-obsidian"] {
+  --bg-primary: #000000;
+  --bg-elevated: #0a0c10;
+  --surface: #11141c;
+  --surface-muted: #181c27;
+  --border: rgba(255, 255, 255, 0.16);
+  --text-main: #ffffff;
+  --text-muted: #a1a1aa;
+  --accent: #38bdf8;
+  --accent-strong: #0ea5e9;
+  --accent-soft: rgba(56, 189, 248, 0.16);
+  --sky: #2dd4bf;
+  --gold: #fbbf24;
+  --gold-soft: rgba(251, 191, 36, 0.16);
+  --ok: #4ade80;
+  --ok-soft: rgba(74, 222, 128, 0.15);
+  --danger: #f87171;
+  --danger-soft: rgba(248, 113, 113, 0.16);
+  --shadow: none;
+  --radius: 14px;
+}

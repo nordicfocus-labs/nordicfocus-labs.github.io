@@ -1,0 +1,524 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>End of Life Planner (Nordic Glass) — Split-Cockpit Estate Vault &amp; Executor Kanban</title>
+  <meta name="description" content="Precision Nordic Glass End of Life Planner PWA. Split-Cockpit Readiness HUD, Legal Document Matrix, Integer-Cent Estate Telemetry, Digital Access Keys &amp; 3-Phase Executor Kanban.">
+  <meta name="theme-color" content="#0284c7">
+  <link rel="manifest" href="../manifest.json">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+  <style id="zero-blur-lockout">
+    #tutorial-overlay, .tutorial-overlay {
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      filter: none !important;
+    }
+  </style>
+  <link rel="stylesheet" href="../css/theme.css?v=1.0.0">
+  <link rel="stylesheet" href="../css/app.css?v=1.0.0">
+  <link rel="stylesheet" href="../css/components.css?v=1.0.0">
+  <link rel="stylesheet" href="demo-banner.css?v=1.0.0">
+  <script src="demo-guard.js?v=1.0.0"></script>
+</head>
+<body data-theme="nordic-glass" data-active-tab="overview">
+
+  <div class="shell">
+    <!-- Left Executive Rail (Desktop) -> 3x2 Top Capsule Bar (Mobile) -->
+    <aside class="rail" aria-label="Navigation rail">
+      <div class="rail-brand">
+        <div class="brand-mark" aria-hidden="true">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/><line x1="12" y1="22" x2="12" y2="15.5"/><polyline points="22 8.5 12 15.5 2 8.5"/></svg>
+        </div>
+        <div style="min-width:0;">
+          <h1 class="brand-title">End of Life Planner</h1>
+          <div class="brand-subtitle">Chloe · Nordic Focus Systems</div>
+        </div>
+      </div>
+
+      <nav id="rail-nav" class="rail-nav" aria-label="Main navigation">
+        <button type="button" class="nav-btn active" data-tab="overview">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          <span>Cockpit</span>
+        </button>
+        <button type="button" class="nav-btn" data-tab="contacts">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg>
+          <span>Circle</span>
+        </button>
+        <button type="button" class="nav-btn" data-tab="vault">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          <span>Assets</span>
+        </button>
+        <button type="button" class="nav-btn" data-tab="digital">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <span>Access</span>
+        </button>
+        <button type="button" class="nav-btn" data-tab="wishes">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="9" y1="4" x2="9" y2="22"/><line x1="15" y1="4" x2="15" y2="22"/></svg>
+          <span>Kanban</span>
+        </button>
+        <button type="button" class="nav-btn" data-tab="settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          <span>Packet</span>
+        </button>
+      </nav>
+
+      <div class="rail-foot">
+        <span id="badge-readiness" class="badge-pill">0% Ready</span>
+        <button id="btn-launch-tour" class="btn btn-sm btn-secondary" type="button">Chloe's Tour</button>
+        <button id="btn-toggle-fog" class="btn btn-sm btn-ghost" type="button" aria-pressed="false">Burnout Shield</button>
+      </div>
+    </aside>
+
+    <!-- Dual-Column Split Cockpit Stage -->
+    <div class="stage">
+      <!-- Pinned Executive Telemetry HUD Column (Hidden on non-overview mobile tabs <=900px per G-15) -->
+      <aside class="cockpit-hud" aria-label="Executive Continuity HUD">
+        <section id="hero-readiness" class="glass hero-card" aria-label="Readiness Index"></section>
+
+        <section class="glass fog-hide" aria-label="4-Tile Estate Telemetry Grid">
+          <div class="card-title">
+            <span>4-Tile Vault Telemetry</span>
+            <span class="tag ok">Live</span>
+          </div>
+          <div class="telemetry-grid">
+            <div class="telemetry-tile">
+              <div class="meta-label">First-Call Circle</div>
+              <div id="hud-contacts" class="meta-val">0</div>
+            </div>
+            <div class="telemetry-tile">
+              <div class="meta-label">Monthly Auto-Pay</div>
+              <div id="hud-autopay" class="meta-val">$0.00</div>
+            </div>
+            <div class="telemetry-tile">
+              <div class="meta-label">Digital Keys</div>
+              <div id="hud-digital" class="meta-val">0</div>
+            </div>
+            <div class="telemetry-tile">
+              <div class="meta-label">Executor Done</div>
+              <div id="hud-exec" class="meta-val">0%</div>
+            </div>
+          </div>
+        </section>
+
+        <div class="disclaimer-strip fog-hide">
+          <strong>Sovereign Privacy:</strong> Zero cloud servers. Log document locations and last-4 digits only. Organizational vault — not a legally binding will.
+        </div>
+      </aside>
+
+      <!-- Main Tab Screens Column -->
+      <div class="cockpit-main">
+        <!-- Screen 1: Cockpit Overview -->
+        <main id="screen-overview" class="app-screen active">
+          <section id="quick-capture-card" class="glass fog-hide" aria-label="Rapid command intake">
+            <div class="card-title">
+              <span>10-Second Command Intake</span>
+              <span class="muted">· capture directly into vault</span>
+            </div>
+            <div class="inline-form">
+              <select id="qa-kind" class="select" style="max-width:170px;" aria-label="Intake type">
+                <option value="document">Document Locator</option>
+                <option value="contact">First-Call Contact</option>
+                <option value="account">Account / Policy</option>
+                <option value="digital">Digital Platform</option>
+              </select>
+              <input id="qa-title" class="input" type="text" maxlength="110" placeholder="e.g. Notarized Will in Home Safe, or Vanguard IRA" autocomplete="off">
+              <button id="btn-qa-add" class="btn btn-primary" type="button">Commit Entry</button>
+            </div>
+            <div class="chip-label">Rapid Presets</div>
+            <div id="qa-prompt-chips" class="chip-row" role="group" aria-label="Quick intake presets">
+              <button type="button" class="chip" data-kind="document" data-text="Last Will &amp; Testament (Fireproof Safe)">+ Will Map</button>
+              <button type="button" class="chip" data-kind="contact" data-text="Primary Executor / Trusted Contact">+ Executor</button>
+              <button type="button" class="chip" data-kind="account" data-text="Primary Checking (Last 4: )">+ Checking</button>
+              <button type="button" class="chip" data-kind="digital" data-text="Primary Email &amp; Photo Archive">+ Digital Key</button>
+            </div>
+          </section>
+
+          <section class="glass fog-hide" aria-label="Readiness matrix">
+            <div class="card-title">
+              <span>Continuity Pillar Matrix</span>
+              <span class="muted">· select any pillar to drill down</span>
+            </div>
+            <div id="pillars-grid" class="pillar-grid"></div>
+          </section>
+
+          <section class="stat-grid fog-hide" aria-label="Primary metrics">
+            <div class="stat"><div id="stat-contacts" class="stat-num">0</div><div class="stat-label">People &amp; Care</div></div>
+            <div class="stat"><div id="stat-estate" class="stat-num">$0.00</div><div class="stat-label">Est. Net Estate</div></div>
+            <div class="stat"><div id="stat-review" class="stat-num">365 days</div><div class="stat-label">Next Audit</div></div>
+          </section>
+        </main>
+
+        <!-- Screen 2: Circle & Care -->
+        <section id="screen-contacts" class="app-screen">
+          <div class="screen-head">
+            <div>
+              <h2>Emergency Circle &amp; Care Protocols</h2>
+              <p class="muted">Primary executor, legal &amp; medical counsel, plus pet/dependent guardians.</p>
+            </div>
+            <button class="btn btn-primary btn-sm" type="button" data-open-modal="modal-add-contact">+ Add Contact</button>
+          </div>
+          <div id="contacts-firstcall-card" class="glass">
+            <div class="card-title">
+              <span>First-Call Directory</span>
+              <div id="contact-filter-chips" class="chip-row" role="group" aria-label="Filter contacts">
+                <button type="button" class="chip selected" data-filter="all">All</button>
+                <button type="button" class="chip" data-filter="first">First Call</button>
+                <button type="button" class="chip" data-filter="pro">Legal &amp; Medical</button>
+              </div>
+            </div>
+            <div id="contacts-list" class="list"></div>
+          </div>
+          <div class="glass">
+            <div class="card-title">
+              <span>Dependents &amp; Pet Care Protocols</span>
+              <button class="btn btn-secondary btn-sm" type="button" data-open-modal="modal-add-dependent">+ Add Care Plan</button>
+            </div>
+            <div id="dependents-list" class="list"></div>
+          </div>
+        </section>
+
+        <!-- Screen 3: Legal & Estate Assets -->
+        <section id="screen-vault" class="app-screen">
+          <div class="screen-head">
+            <div>
+              <h2>Legal Matrix &amp; Estate Ledger</h2>
+              <p class="muted">Signed document locations, integer-cent net estate, insurance policies, and auto-pay bills.</p>
+            </div>
+            <button class="btn btn-primary btn-sm" type="button" data-open-modal="modal-add-document">+ Map Document</button>
+          </div>
+          <div id="vault-docs-card" class="glass">
+            <div class="card-title">
+              <span>Legal &amp; Vital Document Map</span>
+              <span id="docs-progress-tag" class="tag">0 mapped</span>
+            </div>
+            <div id="documents-list" class="list"></div>
+          </div>
+          <div id="vault-estate-card" class="glass">
+            <div class="card-title">
+              <span>Accounts, Policies &amp; Liabilities</span>
+              <button class="btn btn-secondary btn-sm" type="button" data-open-modal="modal-add-account">+ Add Account</button>
+            </div>
+            <div class="stat-grid" style="margin-bottom:12px;">
+              <div class="stat"><div id="est-assets" class="stat-num">$0.00</div><div class="stat-label">Assets</div></div>
+              <div class="stat"><div id="est-policies" class="stat-num">$0.00</div><div class="stat-label">Life Insurance</div></div>
+              <div class="stat"><div id="est-debts" class="stat-num">$0.00</div><div class="stat-label">Liabilities</div></div>
+            </div>
+            <div id="accounts-list" class="list"></div>
+          </div>
+          <div class="glass">
+            <div class="card-title">
+              <span>Recurring Auto-Pay Register</span>
+              <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+                <span id="autopay-monthly-tag" class="tag warn">$0.00/mo</span>
+                <button class="btn btn-secondary btn-sm" type="button" data-open-modal="modal-add-autopay">+ Add Auto-Pay</button>
+              </div>
+            </div>
+            <div id="autopays-list" class="list"></div>
+          </div>
+        </section>
+
+        <!-- Screen 4: Digital Access -->
+        <section id="screen-digital" class="app-screen">
+          <div class="screen-head">
+            <div>
+              <h2>Digital Continuity &amp; Access Keys</h2>
+              <p class="muted">Zero plain-text passwords. Point your executor to your password manager and platform directives.</p>
+            </div>
+            <button class="btn btn-primary btn-sm" type="button" data-open-modal="modal-add-digital">+ Add Platform</button>
+          </div>
+          <div id="digital-manager-card" class="glass">
+            <div class="card-title">
+              <span>Master Password Vault Pointer</span>
+              <span class="tag ok">Zero Raw Passwords</span>
+            </div>
+            <div class="grid-2">
+              <label class="field"><span>Password Manager</span><input id="vm-manager" class="input" type="text" maxlength="120" placeholder="e.g. 1Password, Bitwarden"></label>
+              <label class="field"><span>Sealed Recovery Kit Location</span><input id="vm-recovery" class="input" type="text" maxlength="220" placeholder="e.g. Fireproof Safe Folder #1"></label>
+            </div>
+            <label class="field"><span>Device / Apple / Google Legacy Contact</span><input id="vm-legacy-contact" class="input" type="text" maxlength="240" placeholder="e.g. Designated Legacy Contact details"></label>
+            <button id="btn-save-vault-meta" class="btn btn-primary btn-sm" type="button">Save Vault Pointer</button>
+          </div>
+          <div class="glass">
+            <div class="card-title">
+              <span>Online Platforms &amp; Directives</span>
+              <span id="digital-tally-tag" class="tag">0 accounts</span>
+            </div>
+            <div id="digital-list" class="list"></div>
+          </div>
+        </section>
+
+        <!-- Screen 5: Wishes & 3-Phase Executor Kanban -->
+        <section id="screen-wishes" class="app-screen">
+          <div class="screen-head">
+            <div>
+              <h2>Final Wishes &amp; 3-Phase Executor Kanban</h2>
+              <p class="muted">Memorial specifications, personal legacy letters, and a 3-column operational executor board.</p>
+            </div>
+            <button class="btn btn-primary btn-sm" type="button" data-open-modal="modal-add-letter">+ Add Letter</button>
+          </div>
+          <div id="executor-checklist-card" class="glass">
+            <div class="card-title">
+              <span>3-Phase Executor Kanban Board</span>
+              <span id="exec-progress-tag" class="tag ok">0% prepared</span>
+            </div>
+            <div id="checklist-phases" class="kanban-grid"></div>
+          </div>
+          <div class="glass">
+            <div class="card-title">
+              <span>Memorial &amp; Disposition Specifications</span>
+              <button id="btn-save-wishes" class="btn btn-primary btn-sm" type="button">Save Wishes</button>
+            </div>
+            <div class="grid-2">
+              <label class="field"><span>Disposition Preference</span><input id="w-disposition" class="input" type="text" maxlength="200" placeholder="e.g. Cremation, Natural Burial"></label>
+              <label class="field"><span>Organ &amp; Tissue Donation</span><input id="w-organ" class="input" type="text" maxlength="120" placeholder="e.g. Registered Donor"></label>
+            </div>
+            <div class="grid-2">
+              <label class="field"><span>Service Tone &amp; Venue</span><input id="w-tone" class="input" type="text" maxlength="200" placeholder="e.g. Celebration of life"></label>
+              <label class="field"><span>Music, Readings &amp; Charities</span><input id="w-music" class="input" type="text" maxlength="240" placeholder="e.g. Playlist &amp; preferred charity"></label>
+            </div>
+            <label class="field"><span>Service &amp; Obituary Notes</span><textarea id="w-notes" class="textarea" maxlength="600" placeholder="Key highlights or special instructions..."></textarea></label>
+          </div>
+          <div class="glass">
+            <div class="card-title">
+              <span>Legacy Letters &amp; Heirloom Designations</span>
+              <button class="btn btn-secondary btn-sm" type="button" data-open-modal="modal-add-letter">+ Add Note</button>
+            </div>
+            <div id="letters-list" class="list"></div>
+          </div>
+        </section>
+
+        <!-- Screen 6: Executor Packet & Settings -->
+        <section id="screen-settings" class="app-screen">
+          <div class="screen-head">
+            <div>
+              <h2>Executor Packet &amp; System Controls</h2>
+              <p class="muted">Generate a print-ready Executor Brief, schedule annual audits, or manage local JSON snapshots.</p>
+            </div>
+          </div>
+          <div id="packet-export-card" class="glass">
+            <div class="card-title">
+              <span>Executor Emergency Packet &amp; Offline Backup</span>
+              <span class="tag ok">100% Local</span>
+            </div>
+            <div class="grid-2">
+              <label class="field"><span>Vault Owner Name</span><input id="set-owner-name" class="input" type="text" maxlength="100" placeholder="e.g. Jordan Taylor"></label>
+              <label class="field"><span>Master Safe / Physical Binder Location</span><input id="set-safe-loc" class="input" type="text" maxlength="220" placeholder="e.g. Fireproof Safe in Study"></label>
+            </div>
+            <div class="row-actions" style="margin-top:6px;">
+              <button id="btn-save-profile" class="btn btn-secondary btn-sm" type="button">Save Details</button>
+              <button id="btn-print-packet" class="btn btn-primary btn-sm" type="button">Print / Save Executor Packet</button>
+              <button id="btn-export-json" class="btn btn-secondary btn-sm" type="button">Export JSON Backup</button>
+              <label class="btn btn-ghost btn-sm" style="cursor:pointer;">Import Backup<input id="input-import-json" type="file" accept="application/json" style="display:none;"></label>
+            </div>
+          </div>
+          <div class="glass">
+            <div class="card-title">
+              <span>Audit Schedule &amp; Locale</span>
+              <span id="review-schedule-tag" class="tag">Audit scheduled</span>
+            </div>
+            <div class="grid-2">
+              <label class="field"><span>Review Cadence</span>
+                <select id="set-cadence" class="select">
+                  <option value="6">Every 6 Months</option>
+                  <option value="12">Every 12 Months</option>
+                  <option value="24">Every 24 Months</option>
+                </select>
+              </label>
+              <label class="field"><span>Currency</span>
+                <select id="set-currency" class="select">
+                  <option value="USD">USD ($)</option>
+                  <option value="EUR">EUR (€)</option>
+                  <option value="GBP">GBP (£)</option>
+                  <option value="CAD">CAD (CA$)</option>
+                  <option value="AUD">AUD (A$)</option>
+                </select>
+              </label>
+            </div>
+            <div class="row-actions">
+              <button id="btn-mark-reviewed" class="btn btn-secondary btn-sm" type="button">Mark Audited Today</button>
+              <button id="btn-toggle-sound" class="btn btn-ghost btn-sm" type="button">Audio Feedback: ON</button>
+            </div>
+          </div>
+          <div class="glass">
+            <div class="card-title"><span>Nordic Glass Themes</span></div>
+            <div id="theme-picker" class="theme-grid"></div>
+          </div>
+          <div class="glass">
+            <div class="card-title"><span>Guided Tour &amp; Vault Reset</span></div>
+            <div class="row-actions">
+              <button id="btn-start-tour" class="btn btn-secondary btn-sm" type="button">Restart Chloe's Tour</button>
+              <button id="btn-clean-slate" class="btn btn-ghost btn-sm" type="button">Start Clean Slate</button>
+              <button id="btn-load-sample" class="btn btn-ghost btn-sm" type="button">Load Sample Data</button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modals -->
+  <div id="modal-add-contact" class="app-modal" role="dialog" aria-modal="true" aria-labelledby="m-cnt-title">
+    <div class="modal-card">
+      <div class="modal-head"><h3 id="m-cnt-title">Add Circle Contact</h3><button type="button" class="btn btn-ghost btn-sm" data-close-modal="modal-add-contact">Close</button></div>
+      <label class="field"><span>Full Name</span><input id="f-cnt-name" class="input" type="text" maxlength="100" placeholder="e.g. Elena Morgan"></label>
+      <div class="grid-2">
+        <label class="field"><span>Role</span>
+          <select id="f-cnt-role" class="select">
+            <option value="executor">Executor / Primary Trusted</option>
+            <option value="family">Family / Close Friend</option>
+            <option value="legal">Estate Attorney / Notary</option>
+            <option value="medical">Physician / Proxy</option>
+            <option value="advisor">Financial Advisor</option>
+            <option value="other">Employer / Other</option>
+          </select>
+        </label>
+        <label class="field"><span>Relationship</span><input id="f-cnt-rel" class="input" type="text" maxlength="100" placeholder="e.g. Spouse, Attorney"></label>
+      </div>
+      <div class="grid-2">
+        <label class="field"><span>Phone</span><input id="f-cnt-phone" class="input" type="text" maxlength="40" placeholder="(555) 123-4567"></label>
+        <label class="field"><span>Email</span><input id="f-cnt-email" class="input" type="email" maxlength="120" placeholder="name@example.com"></label>
+      </div>
+      <label class="field"><span>Notes</span><input id="f-cnt-notes" class="input" type="text" maxlength="300" placeholder="Safe key, backup access"></label>
+      <label class="check-row" style="margin-bottom:6px;"><input id="f-cnt-first" type="checkbox"><span><strong>First-Call Priority</strong> (Notify within 24 hours)</span></label>
+      <div class="modal-foot"><button type="button" class="btn btn-ghost" data-close-modal="modal-add-contact">Cancel</button><button id="btn-submit-contact" type="button" class="btn btn-primary">Save Contact</button></div>
+    </div>
+  </div>
+
+  <div id="modal-add-dependent" class="app-modal" role="dialog" aria-modal="true" aria-labelledby="m-dep-title">
+    <div class="modal-card">
+      <div class="modal-head"><h3 id="m-dep-title">Add Care Protocol</h3><button type="button" class="btn btn-ghost btn-sm" data-close-modal="modal-add-dependent">Close</button></div>
+      <div class="grid-2">
+        <label class="field"><span>Name</span><input id="f-dep-name" class="input" type="text" maxlength="100" placeholder="e.g. Milo (Dog)"></label>
+        <label class="field"><span>Type</span><select id="f-dep-type" class="select"><option value="pet">Pet</option><option value="child">Child / Minor</option><option value="adult">Adult Dependent</option></select></label>
+      </div>
+      <label class="field"><span>Guardian / Caregiver</span><select id="f-dep-guardian" class="select"></select></label>
+      <label class="field"><span>Care &amp; Vet/School Instructions</span><textarea id="f-dep-notes" class="textarea" maxlength="400"></textarea></label>
+      <div class="modal-foot"><button type="button" class="btn btn-ghost" data-close-modal="modal-add-dependent">Cancel</button><button id="btn-submit-dependent" type="button" class="btn btn-primary">Save Protocol</button></div>
+    </div>
+  </div>
+
+  <div id="modal-add-document" class="app-modal" role="dialog" aria-modal="true" aria-labelledby="m-doc-title">
+    <div class="modal-card">
+      <div class="modal-head"><h3 id="m-doc-title">Map Legal / Vital Document</h3><button type="button" class="btn btn-ghost btn-sm" data-close-modal="modal-add-document">Close</button></div>
+      <label class="field"><span>Document Title</span><input id="f-doc-title" class="input" type="text" maxlength="120" placeholder="e.g. Last Will &amp; Testament"></label>
+      <div class="grid-2">
+        <label class="field"><span>Category</span><select id="f-doc-cat" class="select"><option value="Legal">Legal</option><option value="Medical">Medical Directive</option><option value="Vital">Vital Record</option><option value="Property">Property / Title</option><option value="Tax">Tax / Military</option></select></label>
+        <label class="field"><span>Status</span><select id="f-doc-status" class="select"><option value="signed">Signed &amp; Stored</option><option value="located">Located</option><option value="drafting">Drafting</option><option value="missing">Missing</option></select></label>
+      </div>
+      <label class="field"><span>Location</span><input id="f-doc-loc" class="input" type="text" maxlength="220" placeholder="e.g. Fireproof Safe Folder #1"></label>
+      <label class="field"><span>Custodian</span><select id="f-doc-custodian" class="select"></select></label>
+      <div class="modal-foot"><button type="button" class="btn btn-ghost" data-close-modal="modal-add-document">Cancel</button><button id="btn-submit-document" type="button" class="btn btn-primary">Save Document</button></div>
+    </div>
+  </div>
+
+  <div id="modal-add-account" class="app-modal" role="dialog" aria-modal="true" aria-labelledby="m-acc-title">
+    <div class="modal-card">
+      <div class="modal-head"><h3 id="m-acc-title">Add Account, Policy or Liability</h3><button type="button" class="btn btn-ghost btn-sm" data-close-modal="modal-add-account">Close</button></div>
+      <label class="field"><span>Label</span><input id="f-acc-name" class="input" type="text" maxlength="100"></label>
+      <div class="grid-2">
+        <label class="field"><span>Institution</span><input id="f-acc-inst" class="input" type="text" maxlength="100"></label>
+        <label class="field"><span>Last 4 Digits Only</span><input id="f-acc-last4" class="input" type="text" maxlength="10"></label>
+      </div>
+      <div class="grid-2">
+        <label class="field"><span>Kind</span><select id="f-acc-kind" class="select"><option value="asset">Asset</option><option value="policy">Life Insurance</option><option value="debt">Debt / Loan</option></select></label>
+        <label class="field"><span>Value / Benefit</span><input id="f-acc-bal" class="input" type="number" min="0" max="900000000" step="0.01"></label>
+      </div>
+      <label class="field"><span>Beneficiary</span><select id="f-acc-ben" class="select"></select></label>
+      <label class="field"><span>Location / Access Hint</span><input id="f-acc-hint" class="input" type="text" maxlength="220"></label>
+      <div class="modal-foot"><button type="button" class="btn btn-ghost" data-close-modal="modal-add-account">Cancel</button><button id="btn-submit-account" type="button" class="btn btn-primary">Save Account</button></div>
+    </div>
+  </div>
+
+  <div id="modal-add-autopay" class="app-modal" role="dialog" aria-modal="true" aria-labelledby="m-ap-title">
+    <div class="modal-card">
+      <div class="modal-head"><h3 id="m-ap-title">Add Auto-Pay Entry</h3><button type="button" class="btn btn-ghost btn-sm" data-close-modal="modal-add-autopay">Close</button></div>
+      <label class="field"><span>Bill / Subscription</span><input id="f-ap-title" class="input" type="text" maxlength="100"></label>
+      <div class="grid-2">
+        <label class="field"><span>Amount</span><input id="f-ap-amount" class="input" type="number" min="0" max="1000000" step="0.01"></label>
+        <label class="field"><span>Cycle</span><select id="f-ap-cycle" class="select"><option value="monthly">Monthly</option><option value="yearly">Yearly</option><option value="quarterly">Quarterly</option><option value="weekly">Weekly</option></select></label>
+      </div>
+      <label class="field"><span>Payment Method (Last 4)</span><input id="f-ap-method" class="input" type="text" maxlength="80"></label>
+      <label class="field"><span>Executor Action</span><input id="f-ap-note" class="input" type="text" maxlength="180"></label>
+      <div class="modal-foot"><button type="button" class="btn btn-ghost" data-close-modal="modal-add-autopay">Cancel</button><button id="btn-submit-autopay" type="button" class="btn btn-primary">Save Auto-Pay</button></div>
+    </div>
+  </div>
+
+  <div id="modal-add-digital" class="app-modal" role="dialog" aria-modal="true" aria-labelledby="m-dig-title">
+    <div class="modal-card">
+      <div class="modal-head"><h3 id="m-dig-title">Add Digital Platform</h3><button type="button" class="btn btn-ghost btn-sm" data-close-modal="modal-add-digital">Close</button></div>
+      <div class="grid-2">
+        <label class="field"><span>Platform</span><input id="f-dig-service" class="input" type="text" maxlength="100"></label>
+        <label class="field"><span>Handle / Email</span><input id="f-dig-handle" class="input" type="text" maxlength="120"></label>
+      </div>
+      <label class="field"><span>Directive</span><select id="f-dig-dir" class="select"><option value="archive">Archive &amp; Close</option><option value="transfer">Transfer Ownership</option><option value="memorialize">Memorialize</option><option value="delete">Permanently Delete</option></select></label>
+      <label class="field"><span>Access Hint (No Raw Passwords)</span><input id="f-dig-hint" class="input" type="text" maxlength="220"></label>
+      <div class="modal-foot"><button type="button" class="btn btn-ghost" data-close-modal="modal-add-digital">Cancel</button><button id="btn-submit-digital" type="button" class="btn btn-primary">Save Platform</button></div>
+    </div>
+  </div>
+
+  <div id="modal-add-letter" class="app-modal" role="dialog" aria-modal="true" aria-labelledby="m-let-title">
+    <div class="modal-card">
+      <div class="modal-head"><h3 id="m-let-title">Write Legacy Letter</h3><button type="button" class="btn btn-ghost btn-sm" data-close-modal="modal-add-letter">Close</button></div>
+      <div class="grid-2">
+        <label class="field"><span>Recipient</span><input id="f-let-to" class="input" type="text" maxlength="100"></label>
+        <label class="field"><span>Link Contact</span><select id="f-let-contact" class="select"></select></label>
+      </div>
+      <label class="field"><span>Title</span><input id="f-let-title" class="input" type="text" maxlength="120"></label>
+      <label class="field"><span>Message</span><textarea id="f-let-body" class="textarea" maxlength="2500"></textarea></label>
+      <div class="modal-foot"><button type="button" class="btn btn-ghost" data-close-modal="modal-add-letter">Cancel</button><button id="btn-submit-letter" type="button" class="btn btn-primary">Save Letter</button></div>
+    </div>
+  </div>
+
+  <!-- Guided Tour Overlay & Card (Rule-17, Rule-20, Rule-23) -->
+  <div id="tutorial-overlay" class="tutorial-overlay" aria-hidden="true">
+    <div id="tutorial-card" class="tutorial-card" role="dialog" aria-modal="true" aria-labelledby="tutorial-title">
+      <div class="tour-head">
+        <div class="tour-avatar">C</div>
+        <div style="min-width:0;">
+          <div id="tutorial-section-tag" class="tour-tag">SECTION</div>
+          <div id="tutorial-title" class="tour-title">Welcome</div>
+        </div>
+        <div id="tutorial-step-count" class="tour-count">1 / 9</div>
+      </div>
+      <div id="tutorial-message" class="tour-msg"></div>
+      <div id="tutorial-hint" class="tour-hint"></div>
+      <div class="tour-actions">
+        <button id="tutorial-btn-skip" type="button" class="btn btn-ghost btn-sm">Skip</button>
+        <div class="spacer"></div>
+        <button id="tutorial-btn-prev" type="button" class="btn btn-secondary btn-sm">Back</button>
+        <button id="tutorial-btn-next" type="button" class="btn btn-primary btn-sm">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="print-packet-sheet" class="print-only-sheet" aria-hidden="true"></div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    if ('caches' in window) {
+      caches.keys().then(function (keys) {
+        keys.forEach(function (k) {
+          if (k.indexOf('end-of-life-planner-2-') === 0 && k !== 'end-of-life-planner-2-v1') {
+            caches.delete(k);
+          }
+        });
+      });
+    }
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('./sw.js').then(function (reg) {
+          if (reg && reg.update) reg.update();
+        }).catch(function () {});
+      });
+    }
+  </script>
+  <script src="../js/engine.js?v=1.0.0"></script>
+  <script src="../js/storage.js?v=1.0.0"></script>
+  <script src="../js/config.js?v=1.0.0"></script>
+  <script src="../js/tutorials.js?v=1.0.0"></script>
+  <script src="../js/app.js?v=1.0.0"></script>
+</body>
+</html>
+
